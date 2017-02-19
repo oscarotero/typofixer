@@ -8,7 +8,7 @@ use DOMText;
 
 /**
  * Removes the space before some characters like ,:;!?
-*/
+ */
 class NoSpaceBefore implements FixerInterface
 {
 	private $chars;
@@ -23,7 +23,7 @@ class NoSpaceBefore implements FixerInterface
 	 */
 	public function __invoke(Fixer $fixer)
 	{
-		$regexp = "/\s([{$this->chars}])/m";
+		$regexp = "/\s([{$this->chars}])/";
 
 		foreach ($fixer->textNodes() as $node) {
 			$node->data = preg_replace($regexp, '$1', $node->data);

@@ -23,6 +23,14 @@ class QuotesTest extends TestCase
 			[
 				'<p><strong>"Hello</strong> world"</p>',
 				'<p><strong>“Hello</strong> world”</p>',
+			],
+			[
+				'<p>"<strong>Hello"</strong> world</p>',
+				'<p><strong>“Hello”</strong> world</p>',
+			],
+			[
+				'<p><strong>"Hello</strong>" world</p>',
+				'<p><strong>“Hello”</strong> world</p>',
 			]
 		];
 	}

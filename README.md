@@ -1,0 +1,28 @@
+# Typofixer
+
+A [wip] PHP library to fix microtypography issues in html code.
+
+## Requirements
+
+* PHP ^7.0
+* mbstring extension
+
+## Usage
+
+```php
+use Typofixer\Fixer;
+
+$input = '<p>"Hello"&nbsp;&nbsp;world...</p>';
+$output = Fixer::fix($input);
+
+echo $ouput; //<p>“Hello” world…</p>
+```
+
+## Available fixers:
+
+Name | Description
+-----|-------------
+**Ellipsis** | Converts `...` into `…`
+**NoSpaceBefore** | Removes the space before some characteres like `,:;!?`
+**Quotes** | Replace plain quotes by curly quotes
+**Spaces** | Normalize spaces, removes `&nbsp;` and other fixes

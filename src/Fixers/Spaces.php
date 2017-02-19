@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Typofixer\Fixers;
 
 use Typofixer\Fixer;
+use Typofixer\Utils;
 use DOMText;
 
 /**
@@ -11,8 +12,10 @@ use DOMText;
  *
  * - normalize space characters
  * - remove duplicated spaces
- * - normalize spaces in the start/end of some nodes
-*/
+ * - fixes certain space positions:
+ *   <b>Hello </b>world -> <b>Hello</b> world
+ *   <b>Hello </b><i>world</i> -> <b>Hello</b> <i>world</i>
+ */
 class Spaces implements FixerInterface
 {
 	/**
@@ -20,20 +23,36 @@ class Spaces implements FixerInterface
 	 */
 	public function __invoke(Fixer $fixer)
 	{
-		$prev = null;
+		$trim = false;
 
 		foreach ($fixer->textNodes() as $node) {
 			$node->data = preg_replace('/[\s]+/u', ' ', $node->data);
 
-			if (substr($node->data, 0, 1) === ' ') {
-				if (!$prev) {
-					$node->data = substr($node->data, 1);
-				} elseif (substr($prev->data, -1) === ' ') {
-					$prev->data = substr($prev->data, 0, -1);
+			if ($trim && !Utils::startsWith($node, ' ')) {
+				if (self::isUniqueChild($node)) {
+					$node->parentNode->parentNode->insertBefore(new DOMText(' '), $node->parentNode);
+				} else {
+					$node->data = ' '.$node->data;
 				}
 			}
 
-			$prev = $node;
+			$trim = false;
+
+			if ($node->data === ' ') {
+				continue;
+			}
+
+			if (self::isUniqueChild($node) && Utils::endsWith($node, ' ')) {
+				$node->data = rtrim($node->data);
+				$trim = true;
+			}
 		}
+	}
+
+	private static function isUniqueChild($node)
+	{
+		$parent = $node->parentNode;
+
+		return $parent && ($parent->firstChild === $parent->lastChild);
 	}
 }
