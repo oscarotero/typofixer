@@ -21,6 +21,7 @@ class Fixer
                 new Fixers\NoSpaceBefore(),
                 new Fixers\Quotes(),
                 new Fixers\Ellipsis(),
+                new Fixers\MergeTags(),
             ];
         }
 
@@ -61,12 +62,12 @@ class Fixer
     {
         $body = $this->dom->getElementsByTagName('body')->item(0);
         $html = $this->dom->saveHtml($body);
-        
+
         //remove <body> and </body>
-        return substr($html, 6, -7);
+        return trim(substr($html, 6, -7));
     }
 
-    public function textNodes()
+    public function nodes(int $type)
     {
         $element = $this->dom->getElementsByTagName('body')->item(0);
         $down = true;
@@ -75,7 +76,7 @@ class Fixer
             if ($element->firstChild && $down) {
                 $element = $element->firstChild;
 
-                if ($element->nodeType === XML_TEXT_NODE) {
+                if ($element->nodeType === $type) {
                     yield $element;
                 }
                 continue;
@@ -85,7 +86,7 @@ class Fixer
                 $down = true;
                 $element = $element->nextSibling;
 
-                if ($element->nodeType === XML_TEXT_NODE) {
+                if ($element->nodeType === $type) {
                     yield $element;
                 }
                 continue;

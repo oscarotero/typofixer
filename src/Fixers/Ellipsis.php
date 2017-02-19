@@ -16,7 +16,7 @@ class Ellipsis implements FixerInterface
 	 */
 	public function __invoke(Fixer $fixer)
 	{
-		foreach ($fixer->textNodes() as $node) {
+		foreach ($fixer->nodes(XML_TEXT_NODE) as $node) {
 			$node->data = preg_replace('/\.{3,}/', '…', $node->data);
 		}
 	}

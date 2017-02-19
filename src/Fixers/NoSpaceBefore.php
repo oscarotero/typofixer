@@ -25,7 +25,7 @@ class NoSpaceBefore implements FixerInterface
 	{
 		$regexp = "/\s([{$this->chars}])/";
 
-		foreach ($fixer->textNodes() as $node) {
+		foreach ($fixer->nodes(XML_TEXT_NODE) as $node) {
 			$node->data = preg_replace($regexp, '$1', $node->data);
 		}
 	}

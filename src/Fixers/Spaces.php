@@ -25,7 +25,7 @@ class Spaces implements FixerInterface
 	{
 		$trim = false;
 
-		foreach ($fixer->textNodes() as $node) {
+		foreach ($fixer->nodes(XML_TEXT_NODE) as $node) {
 			$node->data = preg_replace('/[\s]+/u', ' ', $node->data);
 
 			if ($trim && !Utils::startsWith($node, ' ')) {

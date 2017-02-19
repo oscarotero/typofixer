@@ -23,6 +23,7 @@ echo $ouput; //<p>“Hello” world…</p>
 Name | Description
 -----|-------------
 **Ellipsis** | Converts `...` into `…`
+**MergeTags** | Merge two consecutive tags. Ex: `<b>hello</b> <b>world</b>` is converted to `<b>hello world</b>`
 **NoSpaceBefore** | Removes the space before some characteres like `,:;!?`
 **Quotes** | Replace plain quotes by curly quotes
 **Spaces** | Normalize spaces, removes `&nbsp;` and other fixes

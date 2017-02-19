@@ -26,7 +26,7 @@ class Quotes implements FixerInterface
 		$deep = [];
 		$prev = null;
 
-		foreach ($fixer->textNodes() as $node) {
+		foreach ($fixer->nodes(XML_TEXT_NODE) as $node) {
 			$text = '';
 			$length = strlen($node->data);
 
