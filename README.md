@@ -24,6 +24,7 @@ Name | Description
 -----|-------------
 **Ellipsis** | Converts `...` into `…`
 **MergeTags** | Merge two consecutive tags. Ex: `<b>hello</b> <b>world</b>` is converted to `<b>hello world</b>`
-**NoSpaceBefore** | Removes the space before some characteres like `,:;!?`
-**Quotes** | Replace plain quotes by curly quotes
-**Spaces** | Normalize spaces, removes `&nbsp;` and other fixes
+**NoSpaceBefore** | Removes the space before some characteres like `,:;!?`. Ex: `hello , world` is converted to `hello, world`.
+**Quotes** | Replace plain quotes by curly quotes. Ex: `"hello word"` is converted to `“hello world”`
+**RemoveEmptyTags** | Removes empty tags or tags containing only spaces. Ex: `<strong> </strong>`
+**Spaces** | Normalize spaces, removes `&nbsp;` and other fixes. Ex: `Hello &nbsp; world` is converted to `Hello world`.
