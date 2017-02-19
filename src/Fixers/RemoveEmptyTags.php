@@ -31,7 +31,7 @@ class RemoveEmptyTags implements FixerInterface
 		}
 
 		foreach ($toRemove as $node) {
-			if ($node->textContent !== '') {
+			if ($node->textContent !== '' && $node->previousSibling) {
 				$node->previousSibling->textContent .= ' ';
 			}
 
