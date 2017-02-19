@@ -15,6 +15,15 @@ class Fixer
     {
         $self = self::create($content);
 
+        if (empty($fixers)) {
+            $fixers = [
+                new Fixers\Spaces(),
+                new Fixers\NoSpaceBefore(),
+                new Fixers\Quotes(),
+                new Fixers\Ellipsis(),
+            ];
+        }
+
         foreach ($fixers as $fixer) {
             $self($fixer);
         }
@@ -50,9 +59,11 @@ class Fixer
      */
     public function __toString(): string
     {
-        $element = $this->dom->getElementsByTagName('body')->item(0);
-
-        return trim($element->firstChild->C14N());
+        $body = $this->dom->getElementsByTagName('body')->item(0);
+        $html = $this->dom->saveHtml($body);
+        
+        //remove <body> and </body>
+        return substr($html, 6, -7);
     }
 
     public function textNodes()
@@ -101,7 +112,7 @@ class Fixer
         $dom->encoding = 'UTF-8';
         $dom->strictErrorChecking = false;
         $dom->substituteEntities = false;
-        $dom->formatOutput = false;
+        $dom->preserveWhiteSpace = false;
 
         $libxmlCurrent = libxml_use_internal_errors(true);
         $mbDetectCurrent = mb_detect_order();

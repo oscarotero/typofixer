@@ -5,25 +5,21 @@ namespace Typofixer\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Typofixer\Fixer;
-use Typofixer\Fixers\Spaces;
+use Typofixer\Fixers\NoSpaceBefore;
 
-class SpacesTest extends TestCase
+class NoSpaceBeforeTest extends TestCase
 {
 	public function dataProvider()
 	{
 		return [
 			[
-				'<p>Hello&nbsp;&nbsp;world</p>',
-				'<p>Hello world</p>',
+				'<p>Hello , world</p>',
+				'<p>Hello, world</p>',
 			],
 			[
-				'<p><strong>Hello   </strong>  world</p>',
-				'<p><strong>Hello</strong> world</p>',
+				'How are you ?',
+				'How are you?',
 			],
-			[
-				'<p><strong> Hello </strong> world</p>',
-				'<p><strong>Hello</strong> world</p>',
-			]
 		];
 	}
 
@@ -33,7 +29,7 @@ class SpacesTest extends TestCase
 	public function testFixer($text, $expect)
 	{
 		$result = Fixer::fix($text, [
-			new Spaces(),
+			new NoSpaceBefore(),
 		]);
 
 		$this->assertSame($expect, $result);

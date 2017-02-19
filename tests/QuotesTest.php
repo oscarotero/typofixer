@@ -5,24 +5,24 @@ namespace Typofixer\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Typofixer\Fixer;
-use Typofixer\Fixers\Spaces;
+use Typofixer\Fixers\Quotes;
 
-class SpacesTest extends TestCase
+class QuotesTest extends TestCase
 {
 	public function dataProvider()
 	{
 		return [
 			[
-				'<p>Hello&nbsp;&nbsp;world</p>',
-				'<p>Hello world</p>',
+				'Hello "world"',
+				'Hello “world”',
 			],
 			[
-				'<p><strong>Hello   </strong>  world</p>',
-				'<p><strong>Hello</strong> world</p>',
+				'<p><strong>Hello</strong> "world"</p>',
+				'<p><strong>Hello</strong> “world”</p>',
 			],
 			[
-				'<p><strong> Hello </strong> world</p>',
-				'<p><strong>Hello</strong> world</p>',
+				'<p><strong>"Hello</strong> world"</p>',
+				'<p><strong>“Hello</strong> world”</p>',
 			]
 		];
 	}
@@ -33,7 +33,7 @@ class SpacesTest extends TestCase
 	public function testFixer($text, $expect)
 	{
 		$result = Fixer::fix($text, [
-			new Spaces(),
+			new Quotes(),
 		]);
 
 		$this->assertSame($expect, $result);

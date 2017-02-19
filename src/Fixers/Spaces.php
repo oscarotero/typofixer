@@ -6,6 +6,13 @@ namespace Typofixer\Fixers;
 use Typofixer\Fixer;
 use DOMText;
 
+/**
+ * Fix the following spaces issues:
+ *
+ * - normalize space characters
+ * - remove duplicated spaces
+ * - normalize spaces in the start/end of some nodes
+*/
 class Spaces implements FixerInterface
 {
 	/**
@@ -16,7 +23,7 @@ class Spaces implements FixerInterface
 		$prev = null;
 
 		foreach ($fixer->textNodes() as $node) {
-			$node->data = preg_replace('/[\s]{2,}/u', ' ', $node->data);
+			$node->data = preg_replace('/[\s]+/u', ' ', $node->data);
 
 			if (substr($node->data, 0, 1) === ' ') {
 				if (!$prev) {
@@ -24,9 +31,6 @@ class Spaces implements FixerInterface
 				} elseif (substr($prev->data, -1) === ' ') {
 					$prev->data = substr($prev->data, 0, -1);
 				}
-			} elseif ($prev && substr($prev->data, -1) === ' ') {
-				$prev->data = substr($prev->data, 0, -1);
-				$node->data = ' '.$node->data;
 			}
 
 			$prev = $node;
