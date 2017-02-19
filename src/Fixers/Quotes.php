@@ -34,6 +34,7 @@ class Quotes implements FixerInterface
 				$char = $node->data[$k];
 
 				if (isset($deep[0]) && $deep[0] === $char) {
+					array_shift($deep);
 					$text .= $this->quotes[1];
 					continue;
 				}
