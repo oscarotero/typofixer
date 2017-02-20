@@ -9,9 +9,9 @@ use Typofixer\Fixers\FixerInterface;
 
 class Fixer
 {
-	private $dom;
+    private $dom;
 
-	public static function fix(string $content, array $fixers = []): string
+    public static function fix(string $content, array $fixers = []): string
     {
         $self = self::create($content);
 
@@ -34,29 +34,29 @@ class Fixer
     }
 
     public static function create(string $content): self
-	{
-		$dom = self::createDOMDocument($content);
-		return new static($dom);
-	}
+    {
+        $dom = self::createDOMDocument($content);
+        return new static($dom);
+    }
 
-	public function __construct(DOMDocument $dom)
-	{
-		$this->dom = $dom;
-	}
+    public function __construct(DOMDocument $dom)
+    {
+        $this->dom = $dom;
+    }
 
-	/**
-	 * Execute a fixer
-	 *
-	 * @param FixerInterface $fixer
-	 */
-	public function __invoke(FixerInterface $fixer)
-	{
-		$fixer($this);
-	}
+    /**
+     * Execute a fixer
+     *
+     * @param FixerInterface $fixer
+     */
+    public function __invoke(FixerInterface $fixer)
+    {
+        $fixer($this);
+    }
 
-	/**
-	 * Returns the fixed string
-	 *
+    /**
+     * Returns the fixed string
+     *
      * @return string
      */
     public function __toString(): string
@@ -103,7 +103,7 @@ class Fixer
         }
     }
 
-	/**
+    /**
      * @param string $content
      *
      * @return DOMDocument

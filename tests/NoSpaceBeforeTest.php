@@ -9,29 +9,29 @@ use Typofixer\Fixers\NoSpaceBefore;
 
 class NoSpaceBeforeTest extends TestCase
 {
-	public function dataProvider()
-	{
-		return [
-			[
-				'<p>Hello , world</p>',
-				'<p>Hello, world</p>',
-			],
-			[
-				'How are you ?',
-				'How are you?',
-			],
-		];
-	}
+    public function dataProvider()
+    {
+        return [
+            [
+                '<p>Hello , world</p>',
+                '<p>Hello, world</p>',
+            ],
+            [
+                'How are you ?',
+                'How are you?',
+            ],
+        ];
+    }
 
-	/**
-	 * @dataProvider dataProvider
-	 */
-	public function testFixer($text, $expect)
-	{
-		$result = Fixer::fix($text, [
-			new NoSpaceBefore(),
-		]);
+    /**
+     * @dataProvider dataProvider
+     */
+    public function testFixer($text, $expect)
+    {
+        $result = Fixer::fix($text, [
+            new NoSpaceBefore(),
+        ]);
 
-		$this->assertSame($expect, $result);
-	}
+        $this->assertSame($expect, $result);
+    }
 }

@@ -9,34 +9,34 @@ use Typofixer\Fixers\RemoveEmptyTags;
 
 class RemoveEmptyTagsTest extends TestCase
 {
-	public function dataProvider()
-	{
-		return [
-			[
-				'<strong></strong> Hello world',
-				'Hello world',
-			],[
-				'<strong></strong> Hello world <strong></strong>',
-				'Hello world',
-			],[
-				'Hello<strong> </strong>world',
-				'Hello world',
-			],[
-				'Hello<strong><i></i></strong> world',
-				'Hello world',
-			]
-		];
-	}
+    public function dataProvider()
+    {
+        return [
+            [
+                '<strong></strong> Hello world',
+                'Hello world',
+            ],[
+                '<strong></strong> Hello world <strong></strong>',
+                'Hello world',
+            ],[
+                'Hello<strong> </strong>world',
+                'Hello world',
+            ],[
+                'Hello<strong><i></i></strong> world',
+                'Hello world',
+            ]
+        ];
+    }
 
-	/**
-	 * @dataProvider dataProvider
-	 */
-	public function testFixer($text, $expect)
-	{
-		$result = Fixer::fix($text, [
-			new RemoveEmptyTags(),
-		]);
+    /**
+     * @dataProvider dataProvider
+     */
+    public function testFixer($text, $expect)
+    {
+        $result = Fixer::fix($text, [
+            new RemoveEmptyTags(),
+        ]);
 
-		$this->assertSame($expect, $result);
-	}
+        $this->assertSame($expect, $result);
+    }
 }

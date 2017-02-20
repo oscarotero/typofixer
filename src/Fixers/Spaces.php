@@ -18,41 +18,41 @@ use DOMText;
  */
 class Spaces implements FixerInterface
 {
-	/**
-	 * {@inheritdoc}
-	 */
-	public function __invoke(Fixer $fixer)
-	{
-		$trim = false;
+    /**
+     * {@inheritdoc}
+     */
+    public function __invoke(Fixer $fixer)
+    {
+        $trim = false;
 
-		foreach ($fixer->nodes(XML_TEXT_NODE) as $node) {
-			$node->data = preg_replace('/[\s]+/u', ' ', $node->data);
+        foreach ($fixer->nodes(XML_TEXT_NODE) as $node) {
+            $node->data = preg_replace('/[\s]+/u', ' ', $node->data);
 
-			if ($trim && !Utils::startsWith($node, ' ')) {
-				if (self::isUniqueChild($node)) {
-					$node->parentNode->parentNode->insertBefore(new DOMText(' '), $node->parentNode);
-				} else {
-					$node->data = ' '.$node->data;
-				}
-			}
+            if ($trim && !Utils::startsWith($node, ' ')) {
+                if (self::isUniqueChild($node)) {
+                    $node->parentNode->parentNode->insertBefore(new DOMText(' '), $node->parentNode);
+                } else {
+                    $node->data = ' '.$node->data;
+                }
+            }
 
-			$trim = false;
+            $trim = false;
 
-			if ($node->data === ' ') {
-				continue;
-			}
+            if ($node->data === ' ') {
+                continue;
+            }
 
-			if (self::isUniqueChild($node) && Utils::endsWith($node, ' ')) {
-				$node->data = rtrim($node->data);
-				$trim = true;
-			}
-		}
-	}
+            if (self::isUniqueChild($node) && Utils::endsWith($node, ' ')) {
+                $node->data = rtrim($node->data);
+                $trim = true;
+            }
+        }
+    }
 
-	private static function isUniqueChild($node)
-	{
-		$parent = $node->parentNode;
+    private static function isUniqueChild($node)
+    {
+        $parent = $node->parentNode;
 
-		return $parent && ($parent->firstChild === $parent->lastChild);
-	}
+        return $parent && ($parent->firstChild === $parent->lastChild);
+    }
 }

@@ -11,22 +11,22 @@ use DOMText;
  */
 class NoSpaceBefore implements FixerInterface
 {
-	private $chars;
+    private $chars;
 
-	public function __construct(string $chars = ',:;!?')
-	{
-		$this->chars = $chars;
-	}
+    public function __construct(string $chars = ',:;!?')
+    {
+        $this->chars = $chars;
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function __invoke(Fixer $fixer)
-	{
-		$regexp = "/\s([{$this->chars}])/";
+    /**
+     * {@inheritdoc}
+     */
+    public function __invoke(Fixer $fixer)
+    {
+        $regexp = "/\s([{$this->chars}])/";
 
-		foreach ($fixer->nodes(XML_TEXT_NODE) as $node) {
-			$node->data = preg_replace($regexp, '$1', $node->data);
-		}
-	}
+        foreach ($fixer->nodes(XML_TEXT_NODE) as $node) {
+            $node->data = preg_replace($regexp, '$1', $node->data);
+        }
+    }
 }

@@ -7,5 +7,5 @@ use Typofixer\Fixer;
 
 interface FixerInterface
 {
-	public function __invoke(Fixer $fixer);
+    public function __invoke(Fixer $fixer);
 }

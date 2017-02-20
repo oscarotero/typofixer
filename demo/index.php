@@ -8,8 +8,8 @@ $before = '';
 $after = '';
 
 if (!empty($_POST['text'])) {
-	$before = $_POST['text'];
-	$after = Fixer::fix($before);
+    $before = $_POST['text'];
+    $after = Fixer::fix($before);
 }
 ?>
 

@@ -9,33 +9,33 @@ use Typofixer\Fixers\Ellipsis;
 
 class EllipsisTest extends TestCase
 {
-	public function dataProvider()
-	{
-		return [
-			[
-				'Hello...',
-				'Hello…',
-			],
-			[
-				'Hello....',
-				'Hello…',
-			],
-			[
-				'Hello..',
-				'Hello..',
-			]
-		];
-	}
+    public function dataProvider()
+    {
+        return [
+            [
+                'Hello...',
+                'Hello…',
+            ],
+            [
+                'Hello....',
+                'Hello…',
+            ],
+            [
+                'Hello..',
+                'Hello..',
+            ]
+        ];
+    }
 
-	/**
-	 * @dataProvider dataProvider
-	 */
-	public function testFixer($text, $expect)
-	{
-		$result = Fixer::fix($text, [
-			new Ellipsis(),
-		]);
+    /**
+     * @dataProvider dataProvider
+     */
+    public function testFixer($text, $expect)
+    {
+        $result = Fixer::fix($text, [
+            new Ellipsis(),
+        ]);
 
-		$this->assertSame($expect, $result);
-	}
+        $this->assertSame($expect, $result);
+    }
 }

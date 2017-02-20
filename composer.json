@@ -13,7 +13,8 @@
         "php": "^7.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.0"
+        "phpunit/phpunit": "^6.0",
+        "friendsofphp/php-cs-fixer": "^2.1"
     },
     "autoload": {
         "psr-4": {
@@ -24,5 +25,9 @@
         "psr-4": {
             "Typofixer\\Tests\\": "tests/"
         }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "cs-fix": "php-cs-fixer fix ."
     }
 }

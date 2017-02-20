@@ -13,29 +13,29 @@ use DOMNode;
  */
 class RemoveEmptyTags implements FixerInterface
 {
-	private $tags = ['strong', 'em', 'b', 'i'];
+    private $tags = ['strong', 'em', 'b', 'i'];
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function __invoke(Fixer $fixer)
-	{
-		$toRemove = [];
+    /**
+     * {@inheritdoc}
+     */
+    public function __invoke(Fixer $fixer)
+    {
+        $toRemove = [];
 
-		foreach ($fixer->nodes(XML_ELEMENT_NODE) as $node) {
-			if (in_array($node->tagName, $this->tags)) {
-				if (trim($node->textContent) === '') {
-					$toRemove[] = $node;
-				}
-			}
-		}
+        foreach ($fixer->nodes(XML_ELEMENT_NODE) as $node) {
+            if (in_array($node->tagName, $this->tags)) {
+                if (trim($node->textContent) === '') {
+                    $toRemove[] = $node;
+                }
+            }
+        }
 
-		foreach ($toRemove as $node) {
-			if ($node->textContent !== '' && $node->previousSibling) {
-				$node->previousSibling->textContent .= ' ';
-			}
+        foreach ($toRemove as $node) {
+            if ($node->textContent !== '' && $node->previousSibling) {
+                $node->previousSibling->textContent .= ' ';
+            }
 
-			$node->parentNode->removeChild($node);
-		}
-	}
+            $node->parentNode->removeChild($node);
+        }
+    }
 }
