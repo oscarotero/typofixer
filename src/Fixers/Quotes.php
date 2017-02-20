@@ -60,19 +60,30 @@ class Quotes implements FixerInterface
 
                 if (isset($deep[0]) && $deep[0] === $char) {
                     array_shift($deep);
-                    $text .= isset($deep[0]) ? $this->secondary[1] : $this->primary[1];
+                    //remove spaces before closing quote
+                    $text = rtrim($text).(isset($deep[0]) ? $this->secondary[1] : $this->primary[1]);
                     continue;
                 }
 
                 if (($i = array_search($char, $opening)) !== false) {
                     array_unshift($deep, $closing[$i]);
                     $text .= isset($deep[1]) ? $this->secondary[0] : $this->primary[0];
+
+                    //remove spaces after opening quote
+                    while (mb_substr($node->data, $k + 1, 1) === ' ') {
+                        ++$k;
+                    }
                     continue;
                 }
 
                 if ($char === '"') {
                     array_unshift($deep, '"');
                     $text .= isset($deep[1]) ? $this->secondary[0] : $this->primary[0];
+
+                    //remove spaces after opening quote
+                    while (mb_substr($node->data, $k + 1, 1) === ' ') {
+                        ++$k;
+                    }
                     continue;
                 }
 

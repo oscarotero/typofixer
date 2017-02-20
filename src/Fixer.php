@@ -19,8 +19,8 @@ class Fixer
             $fixers = [
                 new Fixers\Spaces(),
                 new Fixers\NoSpaceBefore(),
-                new Fixers\Quotes(),
                 new Fixers\Ellipsis(),
+                new Fixers\Quotes(),
                 new Fixers\MergeTags(),
                 new Fixers\RemoveEmptyTags(),
                 new Fixers\RemoveInnerTags(),
