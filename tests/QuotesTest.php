@@ -14,28 +14,32 @@ class QuotesTest extends TestCase
 		return [
 			[
 				'Hello "world"',
-				'Hello “world”',
+				'Hello «world»',
 			],
 			[
 				'<p><strong>Hello</strong> "world"</p>',
-				'<p><strong>Hello</strong> “world”</p>',
+				'<p><strong>Hello</strong> «world»</p>',
 			],
 			[
 				'<p><strong>"Hello</strong> world"</p>',
-				'<p><strong>“Hello</strong> world”</p>',
+				'<p><strong>«Hello</strong> world»</p>',
 			],
 			[
 				'<p>"<strong>Hello"</strong> world</p>',
-				'<p><strong>“Hello”</strong> world</p>',
+				'<p><strong>«Hello»</strong> world</p>',
 			],
 			[
 				'<p><strong>"Hello</strong>" world</p>',
-				'<p><strong>“Hello”</strong> world</p>',
+				'<p><strong>«Hello»</strong> world</p>',
 			],
 			[
 				'<em><strong>"Hello world"</strong> "Hello world"</em>',
-				'<em><strong>“Hello world”</strong> “Hello world”</em>',
-			]
+				'<em><strong>«Hello world»</strong> «Hello world»</em>',
+			],
+			[
+				'<p><strong>“Hello</strong> "world"”</p>',
+				'<p><strong>«Hello</strong> “world”»</p>',
+			],
 		];
 	}
 
