@@ -23,6 +23,7 @@ class Fixer
                 new Fixers\Ellipsis(),
                 new Fixers\MergeTags(),
                 new Fixers\RemoveEmptyTags(),
+                new Fixers\RemoveInnerTags(),
             ];
         }
 
