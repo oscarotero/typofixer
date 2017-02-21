@@ -16,6 +16,14 @@ class FullTest extends TestCase
                 '« <em>Search..</em>. ».',
                 '<em>«Search…»</em>.',
             ],
+            [
+                '<p>Hello,<strong>world</strong></p>',
+                '<p>Hello, <strong>world</strong></p>',
+            ],
+            [
+                '<p><strong>Hello,</strong>world</p>',
+                '<p><strong>Hello,</strong> world</p>',
+            ],
         ];
     }
 

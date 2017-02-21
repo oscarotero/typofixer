@@ -9,12 +9,8 @@ use DOMText;
 
 /**
  * Fix the following spaces issues:
- *
  * - normalize space characters
  * - remove duplicated spaces
- * - fixes certain space positions:
- *   <b>Hello </b>world -> <b>Hello</b> world
- *   <b>Hello </b><i>world</i> -> <b>Hello</b> <i>world</i>
  */
 class Spaces implements FixerInterface
 {
@@ -23,49 +19,8 @@ class Spaces implements FixerInterface
      */
     public function __invoke(Fixer $fixer)
     {
-        $trim = false;
-        $prev = null;
-
         foreach ($fixer->nodes(XML_TEXT_NODE) as $node) {
             $node->data = preg_replace('/[\s]+/u', ' ', $node->data);
-            $isUniqueChild = self::isUniqueChild($node);
-            $startsWithSpace = Utils::startsWith($node, ' ');
-
-            if ($startsWithSpace && $prev && $isUniqueChild) {
-                $node->data = ltrim($node->data);
-
-                if (!Utils::endsWith($prev, ' ')) {
-                    $prev->data .= ' ';
-                }
-            }
-
-            if ($trim && !$startsWithSpace) {
-                if ($isUniqueChild) {
-                    $node->parentNode->parentNode->insertBefore(new DOMText(' '), $node->parentNode);
-                } else {
-                    $node->data = ' '.$node->data;
-                }
-            }
-            
-            $trim = false;
-
-            if ($node->data === ' ') {
-                continue;
-            }
-
-            if ($isUniqueChild && Utils::endsWith($node, ' ')) {
-                $node->data = rtrim($node->data);
-                $trim = true;
-            }
-
-            $prev = $node;
         }
-    }
-
-    private static function isUniqueChild($node)
-    {
-        $parent = $node->parentNode;
-
-        return $parent && ($parent->firstChild === $parent->lastChild);
     }
 }

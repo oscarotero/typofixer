@@ -28,4 +28,6 @@ Name | Description
 **Quotes** | Replace plain quotes by curly quotes. Ex: `"hello word"` is converted to `“hello world”`
 **RemoveEmptyTags** | Removes empty tags or tags containing only spaces. Ex: `<strong> </strong>`
 **RemoveInnerTags** | Removes some tags that cannot be inside other tags. Ex: `<strong>hello <strong>world</strong></strong>` is converted to `<strong>hello world</strong>`
-**Spaces** | Normalize spaces, removes `&nbsp;` and other fixes. Ex: `Hello &nbsp; world` is converted to `Hello world`.
+**SpaceAfter** | Ensure there's a space after some characters like `,:;!?`. Ex: `hello,world` is converted to `hello, world`.
+**Spaces** | Removes duplicated spaces and convert all unicode spaces (like `&nbsp;`) to simple spaces. Ex: `Hello &nbsp; world` is converted to `Hello world`.
+**SpaceTags** | Normalize spaces between tags. Ex: `<strong>hello </strong>world` is converted to `<strong>hello</strong> world`.
