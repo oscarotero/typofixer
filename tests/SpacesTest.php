@@ -31,6 +31,10 @@ class SpacesTest extends TestCase
             [
                 '<p><strong>Hello </strong><i>world</i></p>',
                 '<p><strong>Hello</strong> <i>world</i></p>',
+            ],
+            [
+                '<p>Hello<strong> world </strong></p>',
+                '<p>Hello <strong>world</strong></p>',
             ]
         ];
     }

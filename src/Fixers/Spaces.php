@@ -24,28 +24,41 @@ class Spaces implements FixerInterface
     public function __invoke(Fixer $fixer)
     {
         $trim = false;
+        $prev = null;
 
         foreach ($fixer->nodes(XML_TEXT_NODE) as $node) {
             $node->data = preg_replace('/[\s]+/u', ' ', $node->data);
+            $isUniqueChild = self::isUniqueChild($node);
+            $startsWithSpace = Utils::startsWith($node, ' ');
 
-            if ($trim && !Utils::startsWith($node, ' ')) {
-                if (self::isUniqueChild($node)) {
+            if ($startsWithSpace && $prev && $isUniqueChild) {
+                $node->data = ltrim($node->data);
+
+                if (!Utils::endsWith($prev, ' ')) {
+                    $prev->data .= ' ';
+                }
+            }
+
+            if ($trim && !$startsWithSpace) {
+                if ($isUniqueChild) {
                     $node->parentNode->parentNode->insertBefore(new DOMText(' '), $node->parentNode);
                 } else {
                     $node->data = ' '.$node->data;
                 }
             }
-
+            
             $trim = false;
 
             if ($node->data === ' ') {
                 continue;
             }
 
-            if (self::isUniqueChild($node) && Utils::endsWith($node, ' ')) {
+            if ($isUniqueChild && Utils::endsWith($node, ' ')) {
                 $node->data = rtrim($node->data);
                 $trim = true;
             }
+
+            $prev = $node;
         }
     }
 

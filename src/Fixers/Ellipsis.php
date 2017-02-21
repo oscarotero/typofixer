@@ -20,6 +20,8 @@ class Ellipsis implements FixerInterface
         $count = 0;
 
         foreach ($fixer->nodes(XML_TEXT_NODE) as $node) {
+            //If the previous node has ellipsis, remove the possible left dots.
+            //<strong>hello...</strong>. -> <strong>hello…</strong>
             if ($count !== 0) {
                 $node->data = ltrim($node->data, '.');
             }

@@ -30,7 +30,7 @@ class MergeTags implements FixerInterface
                     continue;
                 }
 
-                //If it's a space between
+                //Remove space betwen two tags
                 if (
                     $node->nextSibling->nodeType === XML_TEXT_NODE
                     && trim($node->nextSibling->data) === ''
