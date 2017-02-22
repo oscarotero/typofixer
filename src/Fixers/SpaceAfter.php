@@ -15,7 +15,7 @@ class SpaceAfter implements FixerInterface
     private $chars;
     private $spaces;
 
-    public function __construct(string $chars = '.,:;!?', string $spaces = '.!?')
+    public function __construct(string $chars = '.,:;!?', string $spaces = '.!?)')
     {
         $this->chars = $chars;
         $this->spaces = $spaces;
@@ -31,13 +31,13 @@ class SpaceAfter implements FixerInterface
 
         $regexpContains = "/([{$chars}])([^\s\d{$spaces}])/";
         $regexpEnds = "/[{$chars}]$/";
-        $regexpStart = "/^[^\s\d{$spaces}]/";
+        $regexpStarts = "/^[^\s\d{$spaces}]/";
         $prev = null;
 
         foreach ($fixer->nodes(XML_TEXT_NODE) as $node) {
             $node->data = preg_replace($regexpContains, '$1 $2', $node->data);
 
-            if ($prev && preg_match($regexpEnds, $prev->data) && preg_match($regexpStart, $node->data)) {
+            if ($prev && preg_match($regexpEnds, $prev->data) && preg_match($regexpStarts, $node->data)) {
                 $node->data = ' '.$node->data;
             }
 

@@ -18,9 +18,9 @@ class Fixer
         if (empty($fixers)) {
             $fixers = [
                 new Fixers\Spaces(),
-                new Fixers\NoSpaceBefore(),
                 new Fixers\SpaceAfter(),
                 new Fixers\Ellipsis(),
+                new Fixers\NoSpaceBefore(),
                 new Fixers\SpaceTags(),
                 new Fixers\Quotes(),
                 new Fixers\MergeTags(),

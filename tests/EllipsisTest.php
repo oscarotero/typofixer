@@ -23,6 +23,10 @@ class EllipsisTest extends TestCase
             [
                 'Hello..',
                 'Hello…',
+            ],
+            [
+                '<strong>Hello</strong>...',
+                '<strong>Hello…</strong>',
             ]
         ];
     }

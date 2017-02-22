@@ -17,8 +17,20 @@ class NoSpaceBeforeTest extends TestCase
                 '<p>Hello, world</p>',
             ],
             [
+                '<p>Hello world …</p>',
+                '<p>Hello world…</p>',
+            ],
+            [
                 'How are you ?',
                 'How are you?',
+            ],
+            [
+                '<strong>Hello</strong> ? world',
+                '<strong>Hello?</strong> world',
+            ],
+            [
+                '<strong>Hello </strong> ? world',
+                '<strong>Hello?</strong> world',
             ],
         ];
     }
