@@ -18,25 +18,53 @@ if (!empty($_POST['text'])) {
 <head>
 	<title>Typofixer</title>
 	<style type="text/css">
+		html {
+			font-family: sans-serif;
+			line-height: 1.15;
+		}
 		body {
 			margin: 0;
-			font-family: sans-serif;
+		}
+		form {
+			padding: 1rem;
+			box-sizing: border-box;
+			display: flex;
+			flex-direction: column;
+			height: 100vh;
 		}
 		.textareas {
 			display: flex;
+			flex-grow: 1;
 		}
 		textarea {
 			width: 50%;
 			flex: 0 0 auto;
-			height: calc(100vh - 50px);
 			box-sizing: border-box;
 			padding: 1em;
 			border: none;
-			font-size: 1em;
-			line-height: 1.3em;
+			font-size: 100%;
+			line-height: 1.3;
+			font-family: monospace;
+			resize: none;
 		}
 		textarea:first-child {
 			background: #ddd;
+		}
+		textarea:focus {
+			outline: none;
+		}
+		button {
+			background: blue;
+			color: white;
+			padding: 1em;
+			border: none;
+			border-radius: 3px;
+			font-family: inherit;
+			font-weight: bold;
+			font-size: 1.4rem;
+		}
+		p {
+			margin-bottom: 0;
 		}
 	</style>
 </head>
@@ -46,7 +74,9 @@ if (!empty($_POST['text'])) {
 		<textarea name="text"><?= htmlspecialchars($before) ?></textarea>
 		<textarea><?= htmlspecialchars($after) ?></textarea>
 	</div>
-	<button type="submit">Send</button>
+	<p>
+		<button type="submit">Send</button>
+	</p>
 </form>
 </body>
 </html>
