@@ -21,6 +21,7 @@ class SpaceTags implements FixerInterface
     {
         $trim = false;
         $prev = null;
+        $toRemove = [];
 
         foreach ($fixer->nodes(XML_TEXT_NODE) as $node) {
             $isUniqueChild = self::isUniqueChild($node);
@@ -45,6 +46,8 @@ class SpaceTags implements FixerInterface
             $trim = false;
 
             if ($node->data === ' ') {
+                $toRemove[] = $node;
+                $trim = true;
                 continue;
             }
 
@@ -54,6 +57,10 @@ class SpaceTags implements FixerInterface
             }
 
             $prev = $node;
+        }
+
+        foreach ($toRemove as $node) {
+            $node->parentNode->removeChild($node);
         }
     }
 
