@@ -29,9 +29,9 @@ class SpaceAfter implements FixerInterface
         $chars = preg_quote($this->chars, '/');
         $spaces = preg_quote($this->spaces, '/');
 
-        $regexpContains = "/([{$chars}])([^\s\d{$spaces}])/";
-        $regexpEnds = "/[{$chars}]$/";
-        $regexpStarts = "/^[^\s\d{$spaces}]/";
+        $regexpContains = "/([{$chars}])([^\s\d{$spaces}])/u";
+        $regexpEnds = "/[{$chars}]$/u";
+        $regexpStarts = "/^[^\s\d{$spaces}]/u";
         $prev = null;
 
         foreach ($fixer->nodes(XML_TEXT_NODE) as $node) {

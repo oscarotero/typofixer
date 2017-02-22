@@ -24,8 +24,8 @@ class NoSpaceBefore implements FixerInterface
     public function __invoke(Fixer $fixer)
     {
         $chars = preg_quote($this->chars, '/');
-        $regexpContains = "/\s+([{$chars}])/";
-        $regexpStarts = "/^([{$chars}]+)/";
+        $regexpContains = "/\s+([{$chars}])/u";
+        $regexpStarts = "/^([{$chars}]+)/u";
         $prev = null;
 
         foreach ($fixer->nodes(XML_TEXT_NODE) as $node) {
