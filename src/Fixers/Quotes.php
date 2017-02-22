@@ -59,13 +59,14 @@ class Quotes implements FixerInterface
                 $prevChar = $char ?? null;
                 $char = mb_substr($node->data, $k, 1);
 
-                if (isset($deep[0]) && $deep[0] === $char) {
+                if (isset($deep[0]) && ($deep[0] === $char || array_search($char, $closing) !== false)) {
                     array_shift($deep);
                     //remove spaces before closing quote
                     $text = rtrim($text).(isset($deep[0]) ? $this->secondary[1] : $this->primary[1]);
                     continue;
                 }
 
+                //new opening quote
                 if (($i = array_search($char, $opening)) !== false) {
                     array_unshift($deep, $closing[$i]);
                     $text .= isset($deep[1]) ? $this->secondary[0] : $this->primary[0];
@@ -77,8 +78,9 @@ class Quotes implements FixerInterface
                     continue;
                 }
 
-                if ($char === '"') {
-                    array_unshift($deep, '"');
+                //new flat quote
+                if ($char === '"' || $char === '´') {
+                    array_unshift($deep, $char);
                     $text .= isset($deep[1]) ? $this->secondary[0] : $this->primary[0];
 
                     //remove spaces after opening quote
@@ -88,6 +90,7 @@ class Quotes implements FixerInterface
                     continue;
                 }
 
+                //new simple quote (discard apostrophes)
                 if ($char === "'" && ($k === 0 || ($prevChar && !preg_match('/^[a-z]$/i', $prevChar)))) {
                     array_unshift($deep, "'");
                     $text .= isset($deep[1]) ? $this->secondary[0] : $this->primary[0];

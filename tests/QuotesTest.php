@@ -17,11 +17,19 @@ class QuotesTest extends TestCase
                 'Hello «world»',
             ],
             [
+                'Hello "world”',
+                'Hello «world»',
+            ],
+            [
                 '<p><strong>Hello</strong> "world"</p>',
                 '<p><strong>Hello</strong> «world»</p>',
             ],
             [
                 '<p><strong>"Hello</strong> world"</p>',
+                '<p><strong>«Hello</strong> world»</p>',
+            ],
+            [
+                '<p><strong>´Hello</strong> world´</p>',
                 '<p><strong>«Hello</strong> world»</p>',
             ],
             [

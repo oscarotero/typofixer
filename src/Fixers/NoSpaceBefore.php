@@ -13,7 +13,7 @@ class NoSpaceBefore implements FixerInterface
 {
     private $chars;
 
-    public function __construct(string $chars = ',:;!?…')
+    public function __construct(string $chars = '.,:;!?…')
     {
         $this->chars = $chars;
     }
