@@ -27,6 +27,10 @@ class FullTest extends TestCase
             [
                 '<p>Hello ‘world’</p>',
                 '<p>Hello «world»</p>',
+            ],
+            [
+                "<p>Suyas</p>\n\n<p><strong><em>\"El\"</em></strong></p>",
+                "<p>Suyas</p>\n<p><strong><em>«El»</em></strong></p>",
             ]
         ];
     }

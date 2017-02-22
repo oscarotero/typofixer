@@ -35,10 +35,10 @@ class SpaceTags implements FixerInterface
                 }
             }
 
-            if ($trim && !$startsWithSpace) {
+            if ($trim && !$startsWithSpace && !self::isFirstInBlock($node)) {
                 if ($isUniqueChild) {
                     $node->parentNode->parentNode->insertBefore(new DOMText(' '), $node->parentNode);
-                } elseif (!self::isFirstInBlock($node)) {
+                } else {
                     $node->data = ' '.$node->data;
                 }
             }
@@ -73,16 +73,15 @@ class SpaceTags implements FixerInterface
 
     private static function isFirstInBlock($node)
     {
-        while ($node->parentNode) {
-            if ($node !== $node->parentNode->firstChild) {
-                return false;
+        $parent = $node;
+
+        while ($parent->parentNode) {
+            if (Utils::isBlock($parent)) {
+                return Utils::getFirstNodeText($parent) === $node;
             }
 
-            $node = $node->parentNode;
+            $parent = $parent->parentNode;
 
-            if (Utils::isBlock($node)) {
-                return true;
-            }
         }
     }
 }
