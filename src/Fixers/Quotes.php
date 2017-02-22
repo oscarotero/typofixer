@@ -56,6 +56,7 @@ class Quotes implements FixerInterface
             $length = strlen($node->data);
 
             for ($k = 0; $k < $length; $k++) {
+                $prevChar = $char ?? null;
                 $char = mb_substr($node->data, $k, 1);
 
                 if (isset($deep[0]) && $deep[0] === $char) {
@@ -78,6 +79,17 @@ class Quotes implements FixerInterface
 
                 if ($char === '"') {
                     array_unshift($deep, '"');
+                    $text .= isset($deep[1]) ? $this->secondary[0] : $this->primary[0];
+
+                    //remove spaces after opening quote
+                    while (mb_substr($node->data, $k + 1, 1) === ' ') {
+                        ++$k;
+                    }
+                    continue;
+                }
+
+                if ($char === "'" && ($k === 0 || ($prevChar && !preg_match('/^[a-z]$/i', $prevChar)))) {
+                    array_unshift($deep, "'");
                     $text .= isset($deep[1]) ? $this->secondary[0] : $this->primary[0];
 
                     //remove spaces after opening quote
