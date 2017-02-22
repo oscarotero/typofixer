@@ -91,7 +91,7 @@ class Quotes implements FixerInterface
                 }
 
                 //new simple quote (discard apostrophes)
-                if ($char === "'" && ($k === 0 || ($prevChar && !preg_match('/^[a-z]$/i', $prevChar)))) {
+                if ($char === "'" && ($k === 0 || ($prevChar && !preg_match('/^[a-z]$/iu', $prevChar)))) {
                     array_unshift($deep, "'");
                     $text .= isset($deep[1]) ? $this->secondary[0] : $this->primary[0];
 
