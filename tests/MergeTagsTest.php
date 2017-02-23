@@ -22,11 +22,15 @@ class MergeTagsTest extends TestCase
             ],
             [
                 '<strong><i>Hello</i></strong> <strong>world</strong>',
-                '<strong><i>Hello </i>world</strong>',
+                '<strong><i>Hello</i> world</strong>',
             ],
             [
                 '<p>hello</p> <p>world</p>',
                 '<p>hello</p> <p>world</p>',
+            ],
+            [
+                '<strong><a>hello</a></strong> <strong><a>world</a></strong> <strong><a>all</a></strong>',
+                '<strong><a>hello</a> <a>world</a> <a>all</a></strong>',
             ],
         ];
     }

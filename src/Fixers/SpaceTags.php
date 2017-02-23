@@ -46,8 +46,10 @@ class SpaceTags implements FixerInterface
             $trim = false;
 
             if ($node->data === ' ') {
-                $toRemove[] = $node;
-                $trim = true;
+                if (!$node->nextSibling) {
+                    $toRemove[] = $node;
+                    $trim = true;
+                }
                 continue;
             }
 

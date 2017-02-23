@@ -24,7 +24,7 @@ class MergeTags implements FixerInterface
     public function __invoke(Fixer $fixer)
     {
         foreach ($fixer->nodes(XML_ELEMENT_NODE) as $node) {
-            if (in_array($node->tagName, $this->tags) && $node->nextSibling) {
+            while (in_array($node->tagName, $this->tags) && $node->nextSibling) {
                 if (self::isMergeable($node, $node->nextSibling)) {
                     Utils::mergeNodes($node, $node->nextSibling);
                     continue;
@@ -38,7 +38,10 @@ class MergeTags implements FixerInterface
                     && self::isMergeable($node, $node->nextSibling->nextSibling)
                 ) {
                     Utils::mergeNodes($node, $node->nextSibling, $node->nextSibling->nextSibling);
+                    continue;
                 }
+
+                break;
             }
         }
     }
