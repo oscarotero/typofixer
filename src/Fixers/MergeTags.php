@@ -37,10 +37,7 @@ class MergeTags implements FixerInterface
                     && $node->nextSibling->nextSibling
                     && self::isMergeable($node, $node->nextSibling->nextSibling)
                 ) {
-                    $node->parentNode->removeChild($node->nextSibling);
-                    $text = Utils::getFirstNodeText($node);
-                    $text->data .= ' ';
-                    Utils::mergeNodes($node, $node->nextSibling);
+                    Utils::mergeNodes($node, $node->nextSibling, $node->nextSibling->nextSibling);
                 }
             }
         }

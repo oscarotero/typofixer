@@ -30,13 +30,29 @@ final class Utils
         return $node;
     }
 
-    public static function mergeNodes(DOMNode $node, DOMNode $next)
+    public static function getLastNodeText(DOMNode $node)
     {
-        foreach ($next->childNodes as $child) {
-            $node->appendChild($child);
+        while ($node && $node->nodeType !== XML_TEXT_NODE) {
+            $node = $node->lastChild;
         }
 
-        $next->parentNode->removeChild($next);
+        return $node;
+    }
+
+    public static function mergeNodes(DOMNode $node, DOMNode ...$nodes)
+    {
+        foreach ($nodes as $next) {
+            if ($next->nodeType === XML_TEXT_NODE) {
+                $node->appendChild($next);
+                continue;
+            }
+
+            foreach ($next->childNodes as $child) {
+                $node->appendChild($child);
+            }
+        
+            $next->parentNode->removeChild($next);
+        }
     }
 
     public static function isBlock(DOMNode $node)

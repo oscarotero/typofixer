@@ -81,7 +81,6 @@ class SpaceTags implements FixerInterface
             }
 
             $parent = $parent->parentNode;
-
         }
     }
 }
