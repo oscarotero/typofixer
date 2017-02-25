@@ -22,6 +22,7 @@ echo $ouput; //<p>“Hello” world…</p>
 
 Name | Description
 -----|-------------
+**CharsInside** | Move some characters inside the corresponding tags. Ex: `<strong>hello</strong>, world` is converted to `<strong>hello,</strong> world`
 **Ellipsis** | Converts `...` into `…`
 **MergeTags** | Merge two consecutive tags. Ex: `<b>hello</b> <b>world</b>` is converted to `<b>hello world</b>`
 **NoSpaceBefore** | Removes the space before some characteres like `,:;!?`. Ex: `hello , world` is converted to `hello, world`.

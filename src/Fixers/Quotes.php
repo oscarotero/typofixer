@@ -10,9 +10,6 @@ use DOMText;
 /**
  * Fix the open/close quotes
  * - Replace plain quotes by curly quotes
- * - Fixes some quotes positions:
- *   <b>“Hello</b>” world -> <b>“Hello”</b> world
- *   “<b>Hello”</b> world -> <b>“Hello”</b> world
  */
 class Quotes implements FixerInterface
 {
@@ -110,18 +107,7 @@ class Quotes implements FixerInterface
                 $text .= $char;
             }
 
-            if (Utils::endsWith($prev, $this->primary[0])) {
-                $prev->data = mb_substr($prev->data, 0, -1);
-                $text = $this->primary[0].$text;
-            }
-
             $node->data = $text;
-
-            if (Utils::startsWith($node, $this->primary[1])) {
-                $prev->data .= $this->primary[1];
-                $node->data = mb_substr($node->data, 1);
-            }
-
             $prev = $node;
         }
     }

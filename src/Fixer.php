@@ -26,6 +26,7 @@ class Fixer
                 new Fixers\MergeTags(),
                 new Fixers\RemoveEmptyTags(),
                 new Fixers\RemoveInnerTags(),
+                new Fixers\CharsInside(),
             ];
         }
 

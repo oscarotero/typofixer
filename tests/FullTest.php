@@ -14,7 +14,7 @@ class FullTest extends TestCase
         return [
             [
                 '« <em>Search..</em>. ».',
-                '<em>«Search…»</em>.',
+                '<em>«Search…».</em>',
             ],
             [
                 '<p>Hello,<strong>world</strong></p>',
@@ -27,6 +27,10 @@ class FullTest extends TestCase
             [
                 '<p>Hello ‘world’</p>',
                 '<p>Hello «world»</p>',
+            ],
+            [
+                '<p>Hello <strong>‘world</strong>’</p>',
+                '<p>Hello <strong>«world»</strong></p>',
             ],
             [
                 "<p>Suyas</p>\n\n<p><strong><em>\"El\"</em></strong></p>",

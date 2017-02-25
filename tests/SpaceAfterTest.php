@@ -37,6 +37,10 @@ class SpaceAfterTest extends TestCase
                 '<p>1.2</p>',
             ],
             [
+                '<p>1,2</p>',
+                '<p>1,2</p>',
+            ],
+            [
                 '<p><strong>hello,</strong>world</p>',
                 '<p><strong>hello,</strong> world</p>',
             ],
