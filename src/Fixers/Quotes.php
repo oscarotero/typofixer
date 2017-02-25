@@ -141,7 +141,7 @@ class Quotes implements FixerInterface
      */
     private static function isApostrophe(string $char, int $position, string $prevChar = null, string $nextChar = ''): bool
     {
-        return ($char === "'" || $char === '’')
+        return ($char === "'" || $char === '’' || $char === '´')
           && ($position > 0)
           && $prevChar && preg_match('/^[a-z]$/iu', $prevChar);
           //&& ($nextChar !== '') && preg_match('/^[a-z]$/iu', $nextChar);
