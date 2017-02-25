@@ -151,7 +151,7 @@ class Quotes extends Fixer
             return true;
         }
 
-        if (in_array($current, ["'", '’']) && in_array($char, ["'", '‘', '’'])) {
+        if (in_array($current, ["'", '’']) && in_array($char, ["'", '‘', '’', '´'])) {
             return !self::isApostrophe($char, $prevChar);
         }
 
