@@ -5,7 +5,7 @@ namespace Typofixer\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Typofixer\Fixer;
-use Typofixer\Fixers\SpaceAfter;
+use Typofixer\Fixers\AddSpaceAfter;
 
 class SpaceAfterTest extends TestCase
 {
@@ -57,7 +57,7 @@ class SpaceAfterTest extends TestCase
     public function testFixer($text, $expect)
     {
         $result = Fixer::fix($text, [
-            new SpaceAfter(),
+            new AddSpaceAfter(),
         ]);
 
         $this->assertSame($expect, $result);

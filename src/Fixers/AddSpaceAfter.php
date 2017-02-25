@@ -10,7 +10,7 @@ use DOMText;
 /**
  * Ensures there's a space after some characters like ,:;!?
  */
-class SpaceAfter implements FixerInterface
+class AddSpaceAfter implements FixerInterface
 {
     private $chars;
     private $spaces;

@@ -13,7 +13,7 @@ use DOMText;
 class CharsInside implements FixerInterface
 {
     private $ends = '.,:;!?…)»›’”';
-    private $starts = '‹«‘“';
+    private $starts = '‹«‘“¿¡';
     private $tags = ['strong', 'em', 'b', 'i'];
 
     /**

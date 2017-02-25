@@ -14,6 +14,7 @@ First version with the following fixers:
 * Ellipsis
 * MergeTags
 * RemoveSpaceBefore
+* RemoveSpaceAfter
 * Quotes
 * RemoveEmptyTags
 * RemoveInnerTags
