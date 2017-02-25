@@ -31,10 +31,8 @@ class RemoveSpaceBefore implements FixerInterface
         foreach ($fixer->nodes(XML_TEXT_NODE) as $node) {
             $node->data = preg_replace($regexpContains, '$1', $node->data);
 
-            //<strong>hello</strong>. -> <strong>hello.</strong>
-            if ($prev && preg_match($regexpStarts, $node->data, $match)) {
-                $prev->data = rtrim($prev->data).$match[0];
-                $node->data = substr($node->data, strlen($match[0]));
+            if ($prev && preg_match($regexpStarts, $node->data)) {
+                $prev->data = rtrim($prev->data);
             }
 
             $prev = $node;
