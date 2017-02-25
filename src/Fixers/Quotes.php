@@ -152,7 +152,7 @@ class Quotes extends Fixer
         }
 
         if (in_array($current, ["'", '’']) && in_array($char, ["'", '‘', '’'])) {
-            return ($prevChar === null) || !preg_match('/^\w$/iu', $prevChar);
+            return !self::isApostrophe($char, $prevChar);
         }
 
         return false;
