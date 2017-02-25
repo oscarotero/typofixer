@@ -95,7 +95,7 @@ class Quotes extends Fixer
         }
 
         if (!empty($quotes)) {
-          //  $this->errorLog('Found some unclosed quotes');
+            $this->errorLog('Found some unclosed quotes');
         }
     }
 
