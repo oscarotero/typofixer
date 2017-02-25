@@ -37,7 +37,7 @@ class Quotes implements FixerInterface
      */
     public function __invoke(Fixer $fixer)
     {
-        $deep = [];
+        $quotes = [];
         $prev = null;
 
         $opening = [
@@ -60,25 +60,33 @@ class Quotes implements FixerInterface
             for ($k = 0; $k < $length; $k++) {
                 $prevChar = $char ?? null;
                 $char = mb_substr($node->data, $k, 1);
-                $nextChar = mb_substr($node->data, $k + 1, 1);
 
-                if (self::isApostrophe($char, $k, $prevChar, $nextChar)) {
+                //Found a (previously opened) closing quote
+                if (isset($quotes[0]) && ($quotes[0] === $char)) {
+                    array_shift($quotes);
+                    //remove spaces before closing quote
+                    $text = rtrim($text).(isset($quotes[0]) ? $this->secondary[1] : $this->primary[1]);
+                    continue;
+                }
+
+                //Found a possible apostrophe
+                if (self::isApostrophe($char, $k, $prevChar)) {
                     $text .= $this->apostrophe;
                     continue;
                 }
 
-                //new closing quote
-                if (isset($deep[0]) && ($deep[0] === $char || array_search($char, $closing) !== false)) {
-                    array_shift($deep);
+                //Found a (non previously opened) closing quote
+                if (isset($quotes[0]) && ($quotes[0] === $char || array_search($char, $closing) !== false)) {
+                    array_shift($quotes);
                     //remove spaces before closing quote
-                    $text = rtrim($text).(isset($deep[0]) ? $this->secondary[1] : $this->primary[1]);
+                    $text = rtrim($text).(isset($quotes[0]) ? $this->secondary[1] : $this->primary[1]);
                     continue;
                 }
 
-                //new opening quote
+                //Found an opening quote
                 if (($i = array_search($char, $opening)) !== false) {
-                    array_unshift($deep, $closing[$i]);
-                    $text .= isset($deep[1]) ? $this->secondary[0] : $this->primary[0];
+                    array_unshift($quotes, $closing[$i]);
+                    $text .= isset($quotes[1]) ? $this->secondary[0] : $this->primary[0];
 
                     //remove spaces after opening quote
                     while (mb_substr($node->data, $k + 1, 1) === ' ') {
@@ -87,10 +95,10 @@ class Quotes implements FixerInterface
                     continue;
                 }
 
-                //new flat quote
+                //Found a flat quote (not sure if its opening or closing)
                 if (self::isOpeningFlatQuote($char)) {
-                    array_unshift($deep, $char);
-                    $text .= isset($deep[1]) ? $this->secondary[0] : $this->primary[0];
+                    array_unshift($quotes, $char);
+                    $text .= isset($quotes[1]) ? $this->secondary[0] : $this->primary[0];
 
                     //remove spaces after opening quote
                     while (mb_substr($node->data, $k + 1, 1) === ' ') {
@@ -144,7 +152,7 @@ class Quotes implements FixerInterface
     {
         return ($char === "'" || $char === '’')
           && ($position > 0)
-          && $prevChar && preg_match('/^[a-z]$/iu', $prevChar)
-          && ($nextChar !== '') && preg_match('/^[a-z]$/iu', $nextChar);
+          && $prevChar && preg_match('/^[a-z]$/iu', $prevChar);
+          //&& ($nextChar !== '') && preg_match('/^[a-z]$/iu', $nextChar);
     }
 }
