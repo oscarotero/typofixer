@@ -5,9 +5,9 @@ namespace Typofixer\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Typofixer\Fixer;
-use Typofixer\Fixers\NoSpaceBefore;
+use Typofixer\Fixers\RemoveSpaceBefore;
 
-class NoSpaceBeforeTest extends TestCase
+class RemoveSpaceBeforeTest extends TestCase
 {
     public function dataProvider()
     {
@@ -53,7 +53,7 @@ class NoSpaceBeforeTest extends TestCase
     public function testFixer($text, $expect)
     {
         $result = Fixer::fix($text, [
-            new NoSpaceBefore(),
+            new RemoveSpaceBefore(),
         ]);
 
         $this->assertSame($expect, $result);

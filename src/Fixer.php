@@ -20,7 +20,7 @@ class Fixer
                 new Fixers\Spaces(),
                 new Fixers\SpaceAfter(),
                 new Fixers\Ellipsis(),
-                new Fixers\NoSpaceBefore(),
+                new Fixers\RemoveSpaceBefore(),
                 new Fixers\SpaceTags(),
                 new Fixers\Quotes(),
                 new Fixers\MergeTags(),

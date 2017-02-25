@@ -9,7 +9,7 @@ use DOMText;
 /**
  * Removes the space before some characters like ,:;!?
  */
-class NoSpaceBefore implements FixerInterface
+class RemoveSpaceBefore implements FixerInterface
 {
     private $chars;
 

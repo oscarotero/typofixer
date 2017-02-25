@@ -6,4 +6,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 0.1.0 - UNRELEASED
 
-First version
+### Added
+
+First version with the following fixers:
+
+* CharsInside
+* Ellipsis
+* MergeTags
+* RemoveSpaceBefore
+* Quotes
+* RemoveEmptyTags
+* RemoveInnerTags
+* SpaceAfter
+* Spaces
+* SpaceTags
