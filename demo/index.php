@@ -1,15 +1,12 @@
 <?php
 require dirname(__DIR__).'/vendor/autoload.php';
 
-use Typofixer\Fixer;
-use Typofixer\Fixers;
-
 $before = '';
 $after = '';
 
 if (!empty($_POST['text'])) {
     $before = $_POST['text'];
-    $after = Fixer::fix($before);
+    $after = Typofixer\Typofixer::fix($before);
 }
 ?>
 

@@ -76,6 +76,10 @@ class QuotesTest extends TestCase
                 '<p><strong>“Hellos’ world“</strong></p>',
                 '<p><strong>«Hellos’ world»</strong></p>',
             ],
+            [
+                '<p>Hello 70\'s world</p>',
+                '<p>Hello 70’s world</p>',
+            ],
         ];
     }
 

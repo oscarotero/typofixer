@@ -123,7 +123,7 @@ class Quotes extends Fixer
     {
         return ($char === "'" || $char === '’' || $char === '´')
           && ($prevChar !== null)
-          && preg_match('/^[a-z]$/iu', $prevChar);
+          && preg_match('/^\w$/u', $prevChar);
     }
 
     /**
@@ -152,7 +152,7 @@ class Quotes extends Fixer
         }
 
         if (in_array($current, ["'", '’']) && in_array($char, ["'", '‘', '’'])) {
-            return ($prevChar === null) || !preg_match('/^[a-z]$/iu', $prevChar);
+            return ($prevChar === null) || !preg_match('/^\w$/iu', $prevChar);
         }
 
         return false;
