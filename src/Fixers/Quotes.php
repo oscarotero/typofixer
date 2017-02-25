@@ -5,6 +5,7 @@ namespace Typofixer\Fixers;
 
 use Typofixer\Fixer;
 use Typofixer\Utils;
+use Typofixer\InvalidTextException;
 use DOMText;
 
 /**
@@ -109,6 +110,10 @@ class Quotes implements FixerInterface
 
             $node->data = $text;
             $prev = $node;
+        }
+
+        if (!empty($quotes)) {
+            throw new InvalidTextException('Found some unclosed quotes');
         }
     }
 
