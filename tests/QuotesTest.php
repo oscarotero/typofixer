@@ -72,6 +72,10 @@ class QuotesTest extends TestCase
                 '<p><strong>"Hellos’ world"</strong></p>',
                 '<p><strong>«Hellos’ world»</strong></p>',
             ],
+            [
+                '<p><strong>“Hellos’ world“</strong></p>',
+                '<p><strong>«Hellos’ world»</strong></p>',
+            ],
         ];
     }
 

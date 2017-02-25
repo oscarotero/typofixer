@@ -62,7 +62,7 @@ class Quotes implements FixerInterface
                 $char = mb_substr($node->data, $k, 1);
 
                 //Found a (previously opened) closing quote
-                if (isset($quotes[0]) && ($quotes[0] === $char)) {
+                if (isset($quotes[0]) && in_array($char, $quotes[0])) {
                     array_shift($quotes);
                     //remove spaces before closing quote
                     $text = rtrim($text).(isset($quotes[0]) ? $this->secondary[1] : $this->primary[1]);
@@ -76,7 +76,7 @@ class Quotes implements FixerInterface
                 }
 
                 //Found a (non previously opened) closing quote
-                if (isset($quotes[0]) && ($quotes[0] === $char || array_search($char, $closing) !== false)) {
+                if (isset($quotes[0]) && (in_array($char, $quotes[0]) || in_array($char, $closing) !== false)) {
                     array_shift($quotes);
                     //remove spaces before closing quote
                     $text = rtrim($text).(isset($quotes[0]) ? $this->secondary[1] : $this->primary[1]);
@@ -85,7 +85,7 @@ class Quotes implements FixerInterface
 
                 //Found an opening quote
                 if (($i = array_search($char, $opening)) !== false) {
-                    array_unshift($quotes, $closing[$i]);
+                    array_unshift($quotes, [$closing[$i], $opening[$i]]);
                     $text .= isset($quotes[1]) ? $this->secondary[0] : $this->primary[0];
 
                     //remove spaces after opening quote
@@ -97,7 +97,7 @@ class Quotes implements FixerInterface
 
                 //Found a flat quote (not sure if its opening or closing)
                 if (self::isOpeningFlatQuote($char)) {
-                    array_unshift($quotes, $char);
+                    array_unshift($quotes, [$char]);
                     $text .= isset($quotes[1]) ? $this->secondary[0] : $this->primary[0];
 
                     //remove spaces after opening quote
