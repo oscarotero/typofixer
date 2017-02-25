@@ -58,11 +58,15 @@ class QuotesTest extends TestCase
             ],
             [
                 '<p><strong>"Hello\'s"</strong></p>',
-                '<p><strong>«Hello\'s»</strong></p>',
+                '<p><strong>«Hello’s»</strong></p>',
             ],
             [
                 '<p><strong>Hello\'s "world"</strong></p>',
-                '<p><strong>Hello\'s «world»</strong></p>',
+                '<p><strong>Hello’s «world»</strong></p>',
+            ],
+            [
+                '<p><strong>"Hello’s world"</strong></p>',
+                '<p><strong>«Hello’s world»</strong></p>',
             ],
         ];
     }

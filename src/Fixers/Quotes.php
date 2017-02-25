@@ -20,14 +20,16 @@ class Quotes implements FixerInterface
     const DOUBLE_ANGULAR = ['«', '»'];
     const SINGLE_CURVED = ['‘', '’'];
     const DOUBLE_CURVED = ['“', '”'];
+    const APOSTROPHE = '’';
 
     private $primary;
     private $secondary;
 
-    public function __construct(array $primary = null, array $secondary = null)
+    public function __construct(array $primary = null, array $secondary = null, string $apostrophe = null)
     {
         $this->primary = $primary === null ? self::DOUBLE_ANGULAR : $primary;
         $this->secondary = $secondary === null ? self::DOUBLE_CURVED : $secondary;
+        $this->apostrophe = $apostrophe === null ? self::APOSTROPHE : $apostrophe;
     }
 
     /**
@@ -53,12 +55,19 @@ class Quotes implements FixerInterface
 
         foreach ($fixer->nodes(XML_TEXT_NODE) as $node) {
             $text = '';
-            $length = strlen($node->data);
+            $length = mb_strlen($node->data);
 
             for ($k = 0; $k < $length; $k++) {
                 $prevChar = $char ?? null;
                 $char = mb_substr($node->data, $k, 1);
+                $nextChar = mb_substr($node->data, $k + 1, 1);
 
+                if (self::isApostrophe($char, $k, $prevChar, $nextChar)) {
+                    $text .= $this->apostrophe;
+                    continue;
+                }
+
+                //new closing quote
                 if (isset($deep[0]) && ($deep[0] === $char || array_search($char, $closing) !== false)) {
                     array_shift($deep);
                     //remove spaces before closing quote
@@ -79,20 +88,8 @@ class Quotes implements FixerInterface
                 }
 
                 //new flat quote
-                if ($char === '"' || $char === '´') {
+                if (self::isOpeningFlatQuote($char)) {
                     array_unshift($deep, $char);
-                    $text .= isset($deep[1]) ? $this->secondary[0] : $this->primary[0];
-
-                    //remove spaces after opening quote
-                    while (mb_substr($node->data, $k + 1, 1) === ' ') {
-                        ++$k;
-                    }
-                    continue;
-                }
-
-                //new simple quote (discard apostrophes)
-                if ($char === "'" && ($k === 0 || ($prevChar && !preg_match('/^[a-z]$/iu', $prevChar)))) {
-                    array_unshift($deep, "'");
                     $text .= isset($deep[1]) ? $this->secondary[0] : $this->primary[0];
 
                     //remove spaces after opening quote
@@ -119,5 +116,35 @@ class Quotes implements FixerInterface
 
             $prev = $node;
         }
+    }
+
+    /**
+     * Check whether the character is an open flat quote
+     *
+     * @var string $char
+     *
+     * @return bool
+     */
+    private static function isOpeningFlatQuote(string $char): bool
+    {
+        return ($char === '"' || $char === '´' || $char === "'");
+    }
+
+    /**
+     * Check whether the character is an apostrophe (ex: it's)
+     *
+     * @var string $char
+     * @var int $position
+     * @var string|null $prevChar
+     * @var string $nextChar
+     *
+     * @return bool
+     */
+    private static function isApostrophe(string $char, int $position, string $prevChar = null, string $nextChar = ''): bool
+    {
+        return ($char === "'" || $char === '’')
+          && ($position > 0)
+          && $prevChar && preg_match('/^[a-z]$/iu', $prevChar)
+          && ($nextChar !== '') && preg_match('/^[a-z]$/iu', $nextChar);
     }
 }

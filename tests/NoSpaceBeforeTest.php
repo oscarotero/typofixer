@@ -40,6 +40,10 @@ class NoSpaceBeforeTest extends TestCase
                 '<strong>Hello </strong> ? world',
                 '<strong>Hello?</strong> world',
             ],
+            [
+                'Hello (world )',
+                'Hello (world)',
+            ],
         ];
     }
 
