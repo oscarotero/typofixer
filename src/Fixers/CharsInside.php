@@ -31,7 +31,7 @@ class CharsInside implements FixerInterface
         foreach ($fixer->nodes(XML_TEXT_NODE) as $node) {
             //ex: hello «<b>world»</b> -> hello <b>«world»</b>
             if ($prev && preg_match($regexpEnds, $prev->data, $match)) {
-                $prev->data = ($prev->data === $match[0]) ? '' : mb_substr($prev->data, 0 -mb_strlen($match[0]));
+                $prev->data = ($prev->data === $match[0]) ? '' : mb_substr($prev->data, 0, -mb_strlen($match[0]));
                 $node->data = $match[0].ltrim($node->data);
             }
 

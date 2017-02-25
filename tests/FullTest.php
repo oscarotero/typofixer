@@ -29,7 +29,7 @@ class FullTest extends TestCase
                 '<p>Hello «world»</p>',
             ],
             [
-                '<p>Hello <strong>‘world</strong>’</p>',
+                '<p>Hello ‘<strong>world</strong>’</p>',
                 '<p>Hello <strong>«world»</strong></p>',
             ],
             [
