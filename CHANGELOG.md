@@ -10,14 +10,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 First version with the following fixers:
 
+* AddSpaceAfter
 * CharsInside
 * Ellipsis
 * MergeTags
-* RemoveSpaceBefore
-* RemoveSpaceAfter
 * Quotes
 * RemoveEmptyTags
 * RemoveInnerTags
-* SpaceAfter
+* RemoveSpaceAfter
+* RemoveSpaceBefore
 * Spaces
 * SpaceTags

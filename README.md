@@ -10,12 +10,12 @@ A [wip] PHP library to fix microtypography issues in html code.
 ## Usage
 
 ```php
-use Typofixer\Fixer;
+use Typofixer\Typofixer;
 
 $input = '<p>"Hello"&nbsp;&nbsp;world...</p>';
-$output = Fixer::fix($input);
+$output = Typofixer::fix($input);
 
-echo $ouput; //<p>“Hello” world…</p>
+echo $ouput; //<p>«Hello» world…</p>
 ```
 
 ## Available fixers:
