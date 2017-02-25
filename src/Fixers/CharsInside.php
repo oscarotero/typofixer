@@ -3,14 +3,13 @@ declare(strict_types=1);
 
 namespace Typofixer\Fixers;
 
-use Typofixer\Fixer;
-use DOMText;
+use Typofixer\Typofixer;
 
 /**
  * Move some chars inside some tags. Ex:
  * <strong>hello</strong>. -> <strong>hello.</strong>
  */
-class CharsInside implements FixerInterface
+class CharsInside extends Fixer
 {
     private $ends = '.,:;!?…)»›’”';
     private $starts = '‹«‘“¿¡';
@@ -19,7 +18,7 @@ class CharsInside implements FixerInterface
     /**
      * {@inheritdoc}
      */
-    public function __invoke(Fixer $fixer)
+    public function __invoke(Typofixer $html)
     {
         $ends = preg_quote($this->ends, '/');
         $starts = preg_quote($this->starts, '/');
@@ -28,7 +27,7 @@ class CharsInside implements FixerInterface
         $regexpEnds = "/([{$starts}]+)$/u";
         $prev = null;
 
-        foreach ($fixer->nodes(XML_TEXT_NODE) as $node) {
+        foreach ($html->nodes(XML_TEXT_NODE) as $node) {
             //ex: hello «<b>world»</b> -> hello <b>«world»</b>
             if ($prev && preg_match($regexpEnds, $prev->data, $match)) {
                 $prev->data = ($prev->data === $match[0]) ? '' : mb_substr($prev->data, 0, -mb_strlen($match[0]));

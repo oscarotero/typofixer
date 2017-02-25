@@ -7,15 +7,16 @@ use DOMDocument;
 use InvalidArgumentException;
 use Typofixer\Fixers\FixerInterface;
 
-class Fixer
+class Typofixer
 {
+    public $debug = false;
     private $dom;
 
-    public static function fix(string $content, array $fixers = []): string
+    public static function fix(string $content, array $fixers = null): string
     {
-        $self = self::create($content);
+        $self = new static(self::createDOMDocument($content));
 
-        if (empty($fixers)) {
+        if ($fixers === null) {
             $fixers = [
                 new Fixers\Spaces(),
                 new Fixers\AddSpaceAfter(),
@@ -38,13 +39,15 @@ class Fixer
         return (string) $self;
     }
 
-    public static function create(string $content): self
+    public static function log(string $message)
     {
-        $dom = self::createDOMDocument($content);
-        return new static($dom);
+        if ($debug) {
+            throw new Exception("Error Processing Request", 1);
+            
+        }
     }
 
-    public function __construct(DOMDocument $dom)
+    private function __construct(DOMDocument $dom)
     {
         $this->dom = $dom;
     }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Typofixer\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Typofixer\Fixer;
+use Typofixer\Typofixer;
 use Typofixer\Fixers\Ellipsis;
 
 class EllipsisTest extends TestCase
@@ -40,7 +40,7 @@ class EllipsisTest extends TestCase
      */
     public function testFixer($text, $expect)
     {
-        $result = Fixer::fix($text, [
+        $result = Typofixer::fix($text, [
             new Ellipsis(),
         ]);
 

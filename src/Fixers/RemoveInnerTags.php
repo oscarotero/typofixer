@@ -3,15 +3,13 @@ declare(strict_types=1);
 
 namespace Typofixer\Fixers;
 
-use Typofixer\Fixer;
-use Typofixer\Utils;
-use DOMText;
+use Typofixer\Typofixer;
 use DOMNode;
 
 /**
  * Remove tags inside other tags
  */
-class RemoveInnerTags implements FixerInterface
+class RemoveInnerTags extends Fixer
 {
     private $tags = [
         'strong' => ['strong', 'b'],
@@ -23,9 +21,9 @@ class RemoveInnerTags implements FixerInterface
     /**
      * {@inheritdoc}
      */
-    public function __invoke(Fixer $fixer)
+    public function __invoke(Typofixer $html)
     {
-        foreach ($fixer->nodes(XML_ELEMENT_NODE) as $node) {
+        foreach ($html->nodes(XML_ELEMENT_NODE) as $node) {
             $tags = $this->tags[$node->tagName] ?? null;
 
             if ($tags && self::hasParent($node, $tags)) {

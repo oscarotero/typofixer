@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Typofixer\Fixers;
 
-use Typofixer\Fixer;
+use Typofixer\Typofixer;
 use Typofixer\Utils;
 use DOMText;
 
@@ -12,18 +12,18 @@ use DOMText;
  *   <b>Hello </b>world -> <b>Hello</b> world
  *   <b>Hello </b><i>world</i> -> <b>Hello</b> <i>world</i>
  */
-class SpaceTags implements FixerInterface
+class SpaceTags extends Fixer
 {
     /**
      * {@inheritdoc}
      */
-    public function __invoke(Fixer $fixer)
+    public function __invoke(Typofixer $html)
     {
         $trim = false;
         $prev = null;
         $toRemove = [];
 
-        foreach ($fixer->nodes(XML_TEXT_NODE) as $node) {
+        foreach ($html->nodes(XML_TEXT_NODE) as $node) {
             $isUniqueChild = self::isUniqueChild($node);
             $startsWithSpace = Utils::startsWith($node, ' ');
 
@@ -66,14 +66,14 @@ class SpaceTags implements FixerInterface
         }
     }
 
-    private static function isUniqueChild($node)
+    private static function isUniqueChild(DOMText $node): bool
     {
         $parent = $node->parentNode;
 
         return $parent && ($parent->firstChild === $parent->lastChild);
     }
 
-    private static function isFirstInBlock($node)
+    private static function isFirstInBlock(DOMText $node): bool
     {
         $parent = $node;
 
@@ -84,5 +84,7 @@ class SpaceTags implements FixerInterface
 
             $parent = $parent->parentNode;
         }
+
+        return false;
     }
 }

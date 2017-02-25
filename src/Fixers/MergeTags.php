@@ -3,9 +3,8 @@ declare(strict_types=1);
 
 namespace Typofixer\Fixers;
 
-use Typofixer\Fixer;
+use Typofixer\Typofixer;
 use Typofixer\Utils;
-use DOMText;
 use DOMNode;
 
 /**
@@ -14,16 +13,16 @@ use DOMNode;
  * becomes to:
  * <strong>hello world</strong>
  */
-class MergeTags implements FixerInterface
+class MergeTags extends Fixer
 {
     private $tags = ['strong', 'em', 'b', 'i'];
 
     /**
      * {@inheritdoc}
      */
-    public function __invoke(Fixer $fixer)
+    public function __invoke(Typofixer $html)
     {
-        foreach ($fixer->nodes(XML_ELEMENT_NODE) as $node) {
+        foreach ($html->nodes(XML_ELEMENT_NODE) as $node) {
             while (in_array($node->tagName, $this->tags) && $node->nextSibling) {
                 if (self::isMergeable($node, $node->nextSibling)) {
                     Utils::mergeNodes($node, $node->nextSibling);

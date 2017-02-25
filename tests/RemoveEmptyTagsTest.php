@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Typofixer\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Typofixer\Fixer;
+use Typofixer\Typofixer;
 use Typofixer\Fixers\RemoveEmptyTags;
 
 class RemoveEmptyTagsTest extends TestCase
@@ -33,7 +33,7 @@ class RemoveEmptyTagsTest extends TestCase
      */
     public function testFixer($text, $expect)
     {
-        $result = Fixer::fix($text, [
+        $result = Typofixer::fix($text, [
             new RemoveEmptyTags(),
         ]);
 

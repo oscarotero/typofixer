@@ -3,26 +3,23 @@ declare(strict_types=1);
 
 namespace Typofixer\Fixers;
 
-use Typofixer\Fixer;
-use Typofixer\Utils;
-use DOMText;
-use DOMNode;
+use Typofixer\Typofixer;
 
 /**
  * Remove empty tags or tags containing only spaces
  */
-class RemoveEmptyTags implements FixerInterface
+class RemoveEmptyTags extends Fixer
 {
     private $tags = ['strong', 'em', 'b', 'i'];
 
     /**
      * {@inheritdoc}
      */
-    public function __invoke(Fixer $fixer)
+    public function __invoke(Typofixer $html)
     {
         $toRemove = [];
 
-        foreach ($fixer->nodes(XML_ELEMENT_NODE) as $node) {
+        foreach ($html->nodes(XML_ELEMENT_NODE) as $node) {
             if (in_array($node->tagName, $this->tags)) {
                 if (trim($node->textContent) === '') {
                     $toRemove[] = $node;
