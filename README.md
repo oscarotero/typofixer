@@ -24,6 +24,7 @@ Name | Description
 -----|-------------
 **AddSpaceAfter** | Ensure there's a space after some characters like `,:;!?`. Ex: `hello,world` is converted to `hello, world`.
 **CharsInside** | Move some characters inside the corresponding tags. Ex: `<strong>hello</strong>, world` is converted to `<strong>hello,</strong> world`
+**Dash** | Replace the simple `-` between numbers to ndash and `--` to mdash.
 **Ellipsis** | Converts `...` into `…`
 **MergeTags** | Merge two consecutive tags. Ex: `<b>hello</b> <b>world</b>` is converted to `<b>hello world</b>`
 **Quotes** | Replace plain quotes by curly quotes. Ex: `"hello word"` is converted to `“hello world”`

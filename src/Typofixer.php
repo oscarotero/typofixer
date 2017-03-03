@@ -29,6 +29,7 @@ class Typofixer
                 new Fixers\RemoveEmptyTags(),
                 new Fixers\RemoveInnerTags(),
                 new Fixers\CharsInside(),
+                new Fixers\Dash(),
             ];
         }
 

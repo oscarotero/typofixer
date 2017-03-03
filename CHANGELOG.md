@@ -12,6 +12,7 @@ First version with the following fixers:
 
 * AddSpaceAfter
 * CharsInside
+* Dash
 * Ellipsis
 * MergeTags
 * Quotes
