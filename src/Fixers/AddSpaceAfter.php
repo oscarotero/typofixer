@@ -29,6 +29,9 @@ class AddSpaceAfter extends Fixer
         foreach ($html->nodes(XML_TEXT_NODE) as $node) {
             $node->data = preg_replace($regexpContains, '$1 $2', $node->data);
 
+            //fix for domains (ex: domain. com => domain.com)
+            $node->data = preg_replace('/([a-z])\. ([a-z])/', '$1.$2', $node->data);
+
             if ($prev && preg_match($regexpEnds, $prev->data) && preg_match($regexpStarts, $node->data)) {
                 $node->data = ' '.$node->data;
             }

@@ -29,8 +29,12 @@ class SpaceAfterTest extends TestCase
                 '<p>Hello!! world</p>',
             ],
             [
-                '<p>Hello.world</p>',
-                '<p>Hello. world</p>',
+                '<p>Hello.World</p>',
+                '<p>Hello. World</p>',
+            ],
+            [
+                '<p>Hello.com</p>',
+                '<p>Hello.com</p>',
             ],
             [
                 '<p>1.2</p>',
