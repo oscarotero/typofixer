@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Typofixer;
 
 use DOMDocument;
+use DOMElement;
 use InvalidArgumentException;
 use Typofixer\Fixers\FixerInterface;
 
@@ -75,16 +76,21 @@ class Typofixer
      */
     public function __toString(): string
     {
-        $body = $this->dom->getElementsByTagName('body')->item(0);
+        $body = $this->body();
         $html = $this->dom->saveHtml($body);
 
         //remove <body> and </body>
         return trim(substr($html, 6, -7));
     }
 
+    public function body(): DOMElement
+    {
+        return $this->dom->getElementsByTagName('body')->item(0);
+    }
+
     public function nodes(int $type)
     {
-        $element = $this->dom->getElementsByTagName('body')->item(0);
+        $element = $this->body();
         $down = true;
 
         while (true) {
