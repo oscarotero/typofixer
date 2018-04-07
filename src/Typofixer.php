@@ -12,9 +12,14 @@ class Typofixer
     public $debug = false;
     private $dom;
 
+    public static function create(string $content): self
+    {
+        return new static(self::createDOMDocument($content));
+    }
+
     public static function fix(string $content, array $fixers = null): string
     {
-        $self = new static(self::createDOMDocument($content));
+        $self = self::create($content);
 
         if ($fixers === null) {
             $fixers = [
