@@ -12,8 +12,8 @@ matrix:
     - php: nightly
 
 before_install:
-  - composer install
+  - composer install -n
+  - composer cs-fix
 
 script:
-  - composer cs-fix
   - composer test
