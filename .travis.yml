@@ -13,7 +13,6 @@ matrix:
 
 before_install:
   - composer install -n
-  - composer cs-fix
 
 script:
   - composer test
