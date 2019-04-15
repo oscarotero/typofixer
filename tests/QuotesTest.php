@@ -88,9 +88,7 @@ class QuotesTest extends TestCase
      */
     public function testFixer($text, $expect)
     {
-        $result = Typofixer::fix($text, [
-            new Quotes(),
-        ]);
+        $result = Typofixer::runFixers($text, new Quotes(['language' => 'es']));
 
         $this->assertSame($expect, $result);
     }

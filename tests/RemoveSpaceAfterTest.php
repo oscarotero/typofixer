@@ -44,9 +44,7 @@ class RemoveAfterBeforeTest extends TestCase
      */
     public function testFixer($text, $expect)
     {
-        $result = Typofixer::fix($text, [
-            new RemoveSpaceAfter(),
-        ]);
+        $result = Typofixer::runFixers($text, new RemoveSpaceAfter());
 
         $this->assertSame($expect, $result);
     }

@@ -48,9 +48,7 @@ class SpaceTagsTest extends TestCase
      */
     public function testFixer($text, $expect)
     {
-        $result = Typofixer::fix($text, [
-            new SpaceTags(),
-        ]);
+        $result = Typofixer::runFixers($text, new SpaceTags());
 
         $this->assertSame($expect, $result);
     }

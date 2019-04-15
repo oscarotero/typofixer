@@ -40,9 +40,7 @@ class EllipsisTest extends TestCase
      */
     public function testFixer($text, $expect)
     {
-        $result = Typofixer::fix($text, [
-            new Ellipsis(),
-        ]);
+        $result = Typofixer::runFixers($text, new Ellipsis());
 
         $this->assertSame($expect, $result);
     }

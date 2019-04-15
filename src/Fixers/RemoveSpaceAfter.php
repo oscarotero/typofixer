@@ -10,6 +10,8 @@ use Typofixer\Typofixer;
  */
 class RemoveSpaceAfter extends Fixer
 {
+    const PRIORITY = 5;
+
     private $chars = '(¿¡';
 
     /**

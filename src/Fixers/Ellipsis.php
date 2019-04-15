@@ -10,6 +10,8 @@ use Typofixer\Typofixer;
 */
 class Ellipsis extends Fixer
 {
+    const PRIORITY = 3;
+
     /**
      * {@inheritdoc}
      */

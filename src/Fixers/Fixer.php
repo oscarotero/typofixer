@@ -10,17 +10,17 @@ use Typofixer\InvalidTextException;
  */
 abstract class Fixer implements FixerInterface
 {
-	protected $options;
+    protected $options;
 
-	public function __construct(array $options = null)
-	{
-		$this->options = $options ?: [];
-	}
+    public function __construct(array $options = null)
+    {
+        $this->options = $options ?: [];
+    }
 
-	protected function errorLog($message)
-	{
-		if (empty($this->options['debug'])) {
-			throw new InvalidTextException($message);
-		}
-	}
+    protected function errorLog($message)
+    {
+        if (empty($this->options['debug'])) {
+            throw new InvalidTextException($message);
+        }
+    }
 }

@@ -24,9 +24,7 @@ class CharsInsideTest extends TestCase
      */
     public function testFixer($text, $expect)
     {
-        $result = Typofixer::fix($text, [
-            new CharsInside(),
-        ]);
+        $result = Typofixer::runFixers($text, new CharsInside());
 
         $this->assertSame($expect, $result);
     }

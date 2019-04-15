@@ -15,6 +15,8 @@ use DOMNode;
  */
 class MergeTags extends Fixer
 {
+    const PRIORITY = 8;
+
     private $tags = ['strong', 'em', 'b', 'i'];
 
     /**

@@ -11,6 +11,8 @@ use DOMNode;
  */
 class RemoveInnerTags extends Fixer
 {
+    const PRIORITY = 10;
+
     private $tags = [
         'strong' => ['strong', 'b'],
         'em' => ['em', 'i'],

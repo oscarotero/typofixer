@@ -10,35 +10,70 @@ use Typofixer\Typofixer;
  */
 class Quotes extends Fixer
 {
-    const SINGLE_ANGULAR = ['‹', '›'];
-    const DOUBLE_ANGULAR = ['«', '»'];
-    const SINGLE_CURVED = ['‘', '’'];
-    const DOUBLE_CURVED = ['“', '”'];
+    const PRIORITY = 7;
+
+    const SINGLE_ANGULAR_LEFT = '‹';
+    const SINGLE_ANGULAR_RIGHT = '›';
+    const DOUBLE_ANGULAR_LEFT = '«';
+    const DOUBLE_ANGULAR_RIGHT = '»';
+    const SINGLE_CURVED_LEFT = '‘';
+    const SINGLE_CURVED_RIGHT = '’';
+    const DOUBLE_CURVED_LEFT = '“';
+    const DOUBLE_CURVED_RIGHT = '”';
+    const DOUBLE_CURVED_BOTTOM = '„';
+    const SINGLE_CURVED_BOTTOM = '‚';
+
     const APOSTROPHE = '’';
 
-    private $primary = self::DOUBLE_ANGULAR;
-    private $secondary = self::DOUBLE_CURVED;
-    private $apostrophe = self::APOSTROPHE;
+    const LANGUAGES = [
+        [
+            'languages' => ['en'],
+            'primary' => [self::DOUBLE_CURVED_LEFT, self::DOUBLE_CURVED_RIGHT],
+            'secondary' => [self::SINGLE_CURVED_LEFT, self::SINGLE_CURVED_RIGHT],
+        ],
+        [
+            'languages' => ['es', 'fr', 'gl', 'pt'],
+            'primary' => [self::DOUBLE_ANGULAR_LEFT, self::DOUBLE_ANGULAR_RIGHT],
+            'secondary' => [self::DOUBLE_CURVED_LEFT, self::DOUBLE_CURVED_RIGHT],
+        ],
+        [
+            'languages' => ['de', 'nl'],
+            'primary' => [self::DOUBLE_CURVED_BOTTOM, self::DOUBLE_CURVED_LEFT],
+            'secondary' => [self::SINGLE_CURVED_BOTTOM, self::SINGLE_CURVED_LEFT],
+        ],
+        [
+            'languages' => ['sv'],
+            'primary' => [self::DOUBLE_CURVED_RIGHT, self::DOUBLE_CURVED_RIGHT],
+            'secondary' => [self::SINGLE_CURVED_RIGHT, self::SINGLE_CURVED_RIGHT],
+        ],
+        [
+            'languages' => ['da'],
+            'primary' => [self::DOUBLE_ANGULAR_RIGHT, self::DOUBLE_ANGULAR_LEFT],
+            'secondary' => [self::SINGLE_ANGULAR_RIGHT, self::SINGLE_ANGULAR_LEFT],
+        ],
+    ];
 
     /**
      * {@inheritdoc}
      */
     public function __invoke(Typofixer $html)
     {
+        list($primary, $secondary) = $this->getLanguageQuotes();
+
         $quotes = [];
         $prev = null;
 
         $opening = [
-            self::SINGLE_ANGULAR[0],
-            self::DOUBLE_ANGULAR[0],
-            self::SINGLE_CURVED[0],
-            self::DOUBLE_CURVED[0],
+            self::SINGLE_ANGULAR_LEFT,
+            self::DOUBLE_ANGULAR_LEFT,
+            self::SINGLE_CURVED_LEFT,
+            self::DOUBLE_CURVED_LEFT,
         ];
         $closing = [
-            self::SINGLE_ANGULAR[1],
-            self::DOUBLE_ANGULAR[1],
-            self::SINGLE_CURVED[1],
-            self::DOUBLE_CURVED[1],
+            self::SINGLE_ANGULAR_RIGHT,
+            self::DOUBLE_ANGULAR_RIGHT,
+            self::SINGLE_CURVED_RIGHT,
+            self::DOUBLE_CURVED_RIGHT,
         ];
 
         foreach ($html->nodes(XML_TEXT_NODE) as $node) {
@@ -53,20 +88,20 @@ class Quotes extends Fixer
                     array_shift($quotes);
 
                     //remove spaces before closing quote
-                    $text = rtrim($text).(isset($quotes[0]) ? $this->secondary[1] : $this->primary[1]);
+                    $text = rtrim($text).(isset($quotes[0]) ? $secondary[1] : $primary[1]);
                     continue;
                 }
 
                 //Found a possible apostrophe
                 if (self::isApostrophe($char, $prevChar)) {
-                    $text .= $this->apostrophe;
+                    $text .= self::APOSTROPHE;
                     continue;
                 }
 
                 //Found an opening quote
                 if (($i = array_search($char, $opening)) !== false) {
                     array_unshift($quotes, $closing[$i]);
-                    $text .= isset($quotes[1]) ? $this->secondary[0] : $this->primary[0];
+                    $text .= isset($quotes[1]) ? $secondary[0] : $primary[0];
 
                     //remove spaces after opening quote
                     while (mb_substr($node->data, $k + 1, 1) === ' ') {
@@ -78,7 +113,7 @@ class Quotes extends Fixer
                 //Found an opening flat quote
                 if (self::isOpeningFlatQuote($char)) {
                     array_unshift($quotes, $char);
-                    $text .= isset($quotes[1]) ? $this->secondary[0] : $this->primary[0];
+                    $text .= isset($quotes[1]) ? $secondary[0] : $primary[0];
 
                     //remove spaces after opening quote
                     while (mb_substr($node->data, $k + 1, 1) === ' ') {
@@ -101,10 +136,6 @@ class Quotes extends Fixer
 
     /**
      * Check whether the character is an open flat quote
-     *
-     * @var string $char
-     *
-     * @return bool
      */
     private static function isOpeningFlatQuote(string $char): bool
     {
@@ -113,11 +144,6 @@ class Quotes extends Fixer
 
     /**
      * Check whether the character is an apostrophe (ex: it's)
-     *
-     * @var string $char
-     * @var string|null $prevChar
-     *
-     * @return bool
      */
     private static function isApostrophe(string $char, string $prevChar = null): bool
     {
@@ -128,12 +154,6 @@ class Quotes extends Fixer
 
     /**
      * Check whether the character is the closing quote of the previous opened quote
-     *
-     * @param array $quotes
-     * @param string $char
-     * @param string $prevChar
-     *
-     * @return bool
      */
     private static function isClosingQuote(array $quotes, string $char, string $prevChar = null): bool
     {
@@ -156,5 +176,19 @@ class Quotes extends Fixer
         }
 
         return false;
+    }
+
+    private function getLanguageQuotes(): array
+    {
+        $code = $this->options['language'] ?? 'en';
+
+        foreach (self::LANGUAGES as $language) {
+            if (in_array($code, $language['languages'])) {
+                return [
+                    $language['primary'],
+                    $language['secondary'],
+                ];
+            }
+        }
     }
 }

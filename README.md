@@ -4,7 +4,7 @@ A [wip] PHP library to fix microtypography issues in html code.
 
 ## Requirements
 
-* PHP ^7.0
+* PHP ^7.1
 * mbstring extension
 
 ## Usage
@@ -13,7 +13,7 @@ A [wip] PHP library to fix microtypography issues in html code.
 use Typofixer\Typofixer;
 
 $input = '<p>"Hello"&nbsp;&nbsp;world...</p>';
-$output = Typofixer::fix($input);
+$output = Typofixer::fix($input, ['language' => 'es']);
 
 echo $ouput; //<p>«Hello» world…</p>
 ```
@@ -34,3 +34,9 @@ Name | Description
 **RemoveSpaceAfter** | Removes the space after some characteres like `¿¡(`. Ex: `hello ( world)` is converted to `hello (world)`.
 **Spaces** | Removes duplicated spaces and convert all unicode spaces (like `&nbsp;`) to simple spaces. Ex: `Hello &nbsp; world` is converted to `Hello world`.
 **SpaceTags** | Normalize spaces between tags. Ex: `<strong>hello </strong>world` is converted to `<strong>hello</strong> world`.
+
+## Available options
+
+Name | Description
+-----|-------------
+`language` | The ISO language code that is used by some fixers like Quotes

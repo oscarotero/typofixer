@@ -10,5 +10,4 @@ use InvalidArgumentException;
  */
 class InvalidTextException extends InvalidArgumentException
 {
-
 }

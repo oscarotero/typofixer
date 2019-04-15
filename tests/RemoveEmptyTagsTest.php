@@ -33,9 +33,7 @@ class RemoveEmptyTagsTest extends TestCase
      */
     public function testFixer($text, $expect)
     {
-        $result = Typofixer::fix($text, [
-            new RemoveEmptyTags(),
-        ]);
+        $result = Typofixer::runFixers($text, new RemoveEmptyTags());
 
         $this->assertSame($expect, $result);
     }

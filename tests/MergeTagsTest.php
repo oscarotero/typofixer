@@ -40,9 +40,7 @@ class MergeTagsTest extends TestCase
      */
     public function testFixer($text, $expect)
     {
-        $result = Typofixer::fix($text, [
-            new MergeTags(),
-        ]);
+        $result = Typofixer::runFixers($text, new MergeTags());
 
         $this->assertSame($expect, $result);
     }

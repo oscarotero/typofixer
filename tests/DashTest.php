@@ -36,9 +36,7 @@ class DashTest extends TestCase
      */
     public function testFixer($text, $expect)
     {
-        $result = Typofixer::fix($text, [
-            new Dash(),
-        ]);
+        $result = Typofixer::runFixers($text, new Dash());
 
         $this->assertSame($expect, $result);
     }

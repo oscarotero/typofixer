@@ -60,9 +60,7 @@ class SpaceAfterTest extends TestCase
      */
     public function testFixer($text, $expect)
     {
-        $result = Typofixer::fix($text, [
-            new AddSpaceAfter(),
-        ]);
+        $result = Typofixer::runFixers($text, new AddSpaceAfter());
 
         $this->assertSame($expect, $result);
     }

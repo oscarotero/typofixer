@@ -12,6 +12,8 @@ use Typofixer\Typofixer;
  */
 class Spaces extends Fixer
 {
+    const PRIORITY = 1;
+
     /**
      * {@inheritdoc}
      */

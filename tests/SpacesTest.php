@@ -28,9 +28,7 @@ class SpacesTest extends TestCase
      */
     public function testFixer($text, $expect)
     {
-        $result = Typofixer::fix($text, [
-            new Spaces(),
-        ]);
+        $result = Typofixer::runFixers($text, new Spaces());
 
         $this->assertSame($expect, $result);
     }

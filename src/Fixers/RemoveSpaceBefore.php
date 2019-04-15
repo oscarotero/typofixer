@@ -10,6 +10,8 @@ use Typofixer\Typofixer;
  */
 class RemoveSpaceBefore extends Fixer
 {
+    const PRIORITY = 4;
+
     private $chars = '.,:;!?…)';
 
     /**

@@ -10,6 +10,8 @@ use Typofixer\Typofixer;
  */
 class AddSpaceAfter extends Fixer
 {
+    const PRIORITY = 2;
+
     private $chars = '.,:;!?';
     private $spaces = '.!?)';
 

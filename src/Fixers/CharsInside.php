@@ -11,6 +11,8 @@ use Typofixer\Typofixer;
  */
 class CharsInside extends Fixer
 {
+    const PRIORITY = 11;
+
     private $ends = '.,:;!?…)»›’”';
     private $starts = '‹«‘“¿¡';
     private $tags = ['strong', 'em', 'b', 'i'];

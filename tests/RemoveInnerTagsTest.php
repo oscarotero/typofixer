@@ -28,9 +28,7 @@ class RemoveInnerTagsTest extends TestCase
      */
     public function testFixer($text, $expect)
     {
-        $result = Typofixer::fix($text, [
-            new RemoveInnerTags(),
-        ]);
+        $result = Typofixer::runFixers($text, new RemoveInnerTags());
 
         $this->assertSame($expect, $result);
     }

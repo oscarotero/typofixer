@@ -14,6 +14,8 @@ use DOMText;
  */
 class SpaceTags extends Fixer
 {
+    const PRIORITY = 6;
+
     /**
      * {@inheritdoc}
      */

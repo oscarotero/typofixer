@@ -10,6 +10,8 @@ use Typofixer\Typofixer;
  */
 class RemoveEmptyTags extends Fixer
 {
+    const PRIORITY = 9;
+
     private $tags = ['strong', 'em', 'b', 'i'];
 
     /**

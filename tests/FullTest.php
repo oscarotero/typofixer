@@ -52,7 +52,7 @@ class FullTest extends TestCase
      */
     public function testFixer($text, $expect)
     {
-        $result = Typofixer::fix($text);
+        $result = Typofixer::fix($text, ['language' => 'es']);
 
         $this->assertSame($expect, $result);
     }

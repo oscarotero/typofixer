@@ -11,46 +11,46 @@ use Typofixer\Fixers\FixerInterface;
 class Typofixer
 {
     public $debug = false;
+
     private $dom;
+    private $config = [];
 
     public static function create(string $content): self
     {
         return new static(self::createDOMDocument($content));
     }
 
-    public static function fix(string $content, array $fixers = null): string
+    public static function runFixers(string $content, FixerInterface ...$fixers): string
     {
         $self = self::create($content);
-
-        if ($fixers === null) {
-            $fixers = [
-                new Fixers\Spaces(),
-                new Fixers\AddSpaceAfter(),
-                new Fixers\Ellipsis(),
-                new Fixers\RemoveSpaceBefore(),
-                new Fixers\RemoveSpaceAfter(),
-                new Fixers\SpaceTags(),
-                new Fixers\Quotes(),
-                new Fixers\MergeTags(),
-                new Fixers\RemoveEmptyTags(),
-                new Fixers\RemoveInnerTags(),
-                new Fixers\CharsInside(),
-                new Fixers\Dash(),
-            ];
-        }
-
-        foreach ($fixers as $fixer) {
-            $self($fixer);
-        }
+        $self(...$fixers);
 
         return (string) $self;
+    }
+
+    public static function fix(string $content, array $options = []): string
+    {
+        return self::runFixers(
+            $content,
+            new Fixers\Spaces($options),
+            new Fixers\AddSpaceAfter($options),
+            new Fixers\Ellipsis($options),
+            new Fixers\RemoveSpaceBefore($options),
+            new Fixers\RemoveSpaceAfter($options),
+            new Fixers\SpaceTags($options),
+            new Fixers\Quotes($options),
+            new Fixers\MergeTags($options),
+            new Fixers\RemoveEmptyTags($options),
+            new Fixers\RemoveInnerTags($options),
+            new Fixers\CharsInside($options),
+            new Fixers\Dash($options)
+        );
     }
 
     public static function log(string $message)
     {
         if ($debug) {
             throw new Exception("Error Processing Request", 1);
-            
         }
     }
 
@@ -61,18 +61,24 @@ class Typofixer
 
     /**
      * Execute a fixer
-     *
-     * @param FixerInterface $fixer
      */
-    public function __invoke(FixerInterface $fixer)
+    public function __invoke(FixerInterface ...$fixers)
     {
-        $fixer($this);
+        usort($fixers, function ($a, $b) {
+            if ($a::PRIORITY == $b::PRIORITY) {
+                return 0;
+            }
+
+            return ($a::PRIORITY < $b::PRIORITY) ? -1 : 1;
+        });
+
+        foreach ($fixers as $fixer) {
+            $fixer($this);
+        }
     }
 
     /**
      * Returns the fixed string
-     *
-     * @return string
      */
     public function __toString(): string
     {
@@ -123,12 +129,7 @@ class Typofixer
         }
     }
 
-    /**
-     * @param string $content
-     *
-     * @return DOMDocument
-     */
-    private static function createDOMDocument($content): DOMDocument
+    private static function createDOMDocument(string $content): DOMDocument
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->encoding = 'UTF-8';
@@ -154,10 +155,6 @@ class Typofixer
      * Convert the content encoding properly and add Content-Type meta if HTML document.
      *
      * @see http://php.net/manual/en/domdocument.loadhtml.php#91513
-     *
-     * @param string $content
-     *
-     * @return string
      */
     private static function fixContentEncoding(string $content): string
     {

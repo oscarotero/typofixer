@@ -11,6 +11,8 @@ use Typofixer\Typofixer;
 */
 class Dash extends Fixer
 {
+    const PRIORITY = 12;
+
     const NDASH = '–';
     const MDASH = '—';
 
