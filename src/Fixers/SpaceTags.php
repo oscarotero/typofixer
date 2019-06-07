@@ -89,4 +89,9 @@ class SpaceTags extends Fixer
 
         return false;
     }
+
+    public function getPriority(): int
+    {
+        return self::PRIORITY;
+    }
 }

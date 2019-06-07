@@ -64,12 +64,12 @@ class Typofixer
      */
     public function __invoke(FixerInterface ...$fixers)
     {
-        usort($fixers, function ($a, $b) {
-            if ($a::PRIORITY == $b::PRIORITY) {
+        usort($fixers, function (FixerInterface $a, FixerInterface $b) {
+            if ($a->getPriority() == $b->getPriority()) {
                 return 0;
             }
 
-            return ($a::PRIORITY < $b::PRIORITY) ? -1 : 1;
+            return ($a->getPriority() < $b->getPriority()) ? -1 : 1;
         });
 
         foreach ($fixers as $fixer) {

@@ -34,4 +34,10 @@ class RemoveSpaceAfter extends Fixer
             $prev = $node;
         }
     }
+
+
+    public function getPriority(): int
+    {
+        return self::PRIORITY;
+    }
 }

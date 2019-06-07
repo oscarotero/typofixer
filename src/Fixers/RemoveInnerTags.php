@@ -15,9 +15,9 @@ class RemoveInnerTags extends Fixer
 
     private $tags = [
         'strong' => ['strong', 'b'],
-        'em' => ['em', 'i'],
-        'a' => ['a'],
-        'p' => ['p'],
+        'em'     => ['em', 'i'],
+        'a'      => ['a'],
+        'p'      => ['p'],
     ];
 
     /**
@@ -56,5 +56,10 @@ class RemoveInnerTags extends Fixer
         }
 
         $node->parentNode->removeChild($node);
+    }
+
+    public function getPriority(): int
+    {
+        return self::PRIORITY;
     }
 }

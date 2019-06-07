@@ -37,4 +37,9 @@ class RemoveEmptyTags extends Fixer
             $node->parentNode->removeChild($node);
         }
     }
+
+    public function getPriority(): int
+    {
+        return self::PRIORITY;
+    }
 }
