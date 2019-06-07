@@ -51,4 +51,9 @@ class MergeTags extends Fixer
     {
         return $next->nodeType === XML_ELEMENT_NODE && $next->tagName === $current->tagName;
     }
+
+    public function getPriority(): int
+    {
+        return self::PRIORITY;
+    }
 }

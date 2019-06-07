@@ -29,4 +29,9 @@ class Dash extends Fixer
             );
         }
     }
+
+    public function getPriority(): int
+    {
+        return self::PRIORITY;
+    }
 }

@@ -29,4 +29,9 @@ class Ellipsis extends Fixer
             $node->data = preg_replace('/\.{2,}/', '…', $node->data, -1, $count);
         }
     }
+
+    public function getPriority(): int
+    {
+        return self::PRIORITY;
+    }
 }

@@ -23,4 +23,9 @@ class Spaces extends Fixer
             $node->data = preg_replace('/[\s]+/u', ' ', $node->data);
         }
     }
+
+    public function getPriority(): int
+    {
+        return self::PRIORITY;
+    }
 }

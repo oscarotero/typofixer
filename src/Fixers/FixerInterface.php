@@ -10,4 +10,6 @@ interface FixerInterface
     public function __construct(array $options);
 
     public function __invoke(Typofixer $html);
+
+    public function getPriority(): int;
 }
